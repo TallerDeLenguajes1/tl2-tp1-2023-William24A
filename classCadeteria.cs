@@ -1,5 +1,7 @@
 namespace CadeteriaUtilizar;
 using CadeteUtilizar;
+using PedidoUtilizar;
+
 class Cadeteria 
 {
     private string nombre;
@@ -11,6 +13,7 @@ class Cadeteria
         this.telefono= telefono;
         listaempleados = new List<Cadete>();
     }
+    
 }
 
 

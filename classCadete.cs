@@ -30,4 +30,8 @@ class Cadete
         cobrar = 500*cont;
         Console.WriteLine($"Cobrará: ${cobrar}");
     }
+    public void AgregarPedido(Pedido pedido)
+    {
+        listapedido.Add(pedido);
+    }
 }

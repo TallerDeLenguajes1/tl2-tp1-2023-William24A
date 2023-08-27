@@ -7,20 +7,27 @@ class Cadete
     private string direccion;
     private int telefono;
     private List<Pedido> listapedido;
+
+    public int Id { get => id; set => id = value; }
+    public string Nombre { get => nombre; set => nombre = value; }
+    public string Direccion { get => direccion; set => direccion = value; }
+    public int Telefono { get => telefono; set => telefono = value; }
+    internal List<Pedido> Listapedido { get => listapedido; set => listapedido = value; }
+
     public Cadete(int id, string nombre, string direccion, int telefono)
     {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        listapedido = new List<Pedido>();
+        Id = id;
+        Nombre = nombre;
+        Direccion = direccion;
+        Telefono = telefono;
+        Listapedido = new List<Pedido>();
     }
 
     public void JornalACobrar()
     {
         int cont = 0;
         double cobrar;
-        foreach (var item in listapedido)
+        foreach (var item in Listapedido)
         {
             if(item.VerEstado())
             {
@@ -32,6 +39,20 @@ class Cadete
     }
     public void AgregarPedido(Pedido pedido)
     {
-        listapedido.Add(pedido);
+        Listapedido.Add(pedido);
+    }
+    public void EliminarPedio(int numeroPedido)
+    {
+        Listapedido.RemoveAll(p => p.NumeroPedido == numeroPedido);
+    }
+    public void CambiarEstado(Pedido pedido)
+    {
+        foreach (var item in Listapedido)
+        {
+            if(item.NumeroPedido == pedido.NumeroPedido)
+            {
+                item.Estado = true;
+            }
+        }
     }
 }

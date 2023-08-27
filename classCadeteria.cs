@@ -7,6 +7,11 @@ class Cadeteria
     private string nombre;
     private int telefono;
     private List<Cadete> listaempleados;
+
+    public Cadeteria()
+    {
+        Listaempleados = new List<Cadete>();
+    }
     public Cadeteria(string nombre, int telefono)
     {
         this.Nombre = nombre;

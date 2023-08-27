@@ -13,6 +13,10 @@ class Cadete
     public string Direccion { get => direccion; set => direccion = value; }
     public int Telefono { get => telefono; set => telefono = value; }
     internal List<Pedido> Listapedido { get => listapedido; set => listapedido = value; }
+    public Cadete()
+    {
+        Listapedido = new List<Pedido>();
+    }
 
     public Cadete(int id, string nombre, string direccion, int telefono)
     {

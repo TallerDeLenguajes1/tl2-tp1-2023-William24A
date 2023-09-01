@@ -11,6 +11,10 @@ class Cliente
     public int Telefono { get => telefono; set => telefono = value; }
     public string? Datosreferencia { get => datosreferencia; set => datosreferencia = value; }
 
+    public Cliente()
+    {
+
+    }
     public Cliente(string nombreCliente, string direccion, int telefono, string datosreferencia)
     {
         this.NombreCliente = nombreCliente;

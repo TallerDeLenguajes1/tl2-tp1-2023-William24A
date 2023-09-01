@@ -1,5 +1,6 @@
 namespace CadeteUtilizar;
 using PedidoUtilizar;
+using ArchivosCSVUtilizar;
 class Cadete
 {
     private int id;
@@ -49,13 +50,15 @@ class Cadete
     {
         Listapedido.RemoveAll(p => p.NumeroPedido == numeroPedido);
     }
-    public void CambiarEstado(Pedido pedido)
+    public void CambiarEstado(int numeroPedido)
     {
+        var archivo = new Archivo();
         foreach (var item in Listapedido)
         {
-            if(item.NumeroPedido == pedido.NumeroPedido)
+            if(item.NumeroPedido == numeroPedido)
             {
                 item.Estado = true;
+                archivo.CargarInforme(item);
             }
         }
     }

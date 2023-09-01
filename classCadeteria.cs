@@ -30,6 +30,18 @@ class Cadeteria
     {
         Listaempleados.RemoveAll(e => e.Nombre == nombreEmpleado );
     }
+    public void AgregarPedidoCadete(Pedido pedido)
+    {
+        if(listaempleados.Count() != 0)
+        {
+            var rand= new Random();
+            listaempleados[rand.Next(0,listaempleados.Count)].AgregarPedido(pedido);
+        }
+        else
+        {
+            Console.WriteLine("No hay cadetes.");
+        }
+    }
     public void ReasignarPedido(Cadete cadete1, Cadete cadete2, Pedido pedido)
     {
         cadete2.AgregarPedido(pedido);

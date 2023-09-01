@@ -12,6 +12,10 @@ class Pedido
     internal Cliente Cliente { get => cliente; set => cliente = value; }
     public bool Estado { get => estado; set => estado = value; }
 
+    public Pedido()
+    {
+        
+    }
     public Pedido(int numeroPedido, string? observacion,string nombreCliente, string direccion, int telefono, string datosreferencia)
     {
         this.NumeroPedido = numeroPedido;

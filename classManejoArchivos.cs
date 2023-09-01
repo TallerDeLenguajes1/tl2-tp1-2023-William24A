@@ -1,5 +1,6 @@
 using CadeteriaUtilizar;
 using CadeteUtilizar;
+using PedidoUtilizar;
 
 namespace ArchivosCSVUtilizar;
 class Archivo
@@ -117,6 +118,55 @@ class Archivo
         {
             Console.WriteLine("El archivo no existe.");
             return false;
+        }
+    }
+
+    public List<Pedido> LeerInforme()
+    {
+        string ruta = "Informe.csv";
+        List<Pedido> listaPedido= new List<Pedido>();
+        try
+        {   
+            using(StreamReader reader = new StreamReader(ruta))
+            {
+                while(!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    string[] dato = line.Split(',');
+                    Pedido pedido = new Pedido();
+                    pedido.NumeroPedido = int.Parse(dato[0]);
+                    pedido.Observacion = dato[1];
+                    pedido.Cliente.NombreCliente = dato[3];
+                    pedido.Cliente.Direccion = dato[4];
+                    pedido.Cliente.Telefono = int.Parse(dato[5]);
+                    pedido.Cliente.Datosreferencia = dato[6];
+                    pedido.Estado = bool.Parse(dato[7]);
+                    listaPedido.Add(pedido);
+                }
+            }  
+            return listaPedido;          
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al escribir datos: " + ex.Message);
+            return listaPedido;
+        }
+
+    }
+    public void CargarInforme(Pedido pedido)
+    {
+        string ruta = "Informe.csv";
+        try
+        {
+            using (StreamWriter writer = new StreamWriter(ruta))
+            {
+                
+                    writer.WriteLine($"{pedido.NumeroPedido},{pedido.Observacion},{pedido.Cliente.NombreCliente},{pedido.Cliente.Direccion},{pedido.Cliente.Telefono},{pedido.Cliente.Datosreferencia},{pedido.Estado}");   
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al escribir datos: " + ex.Message);
         }
     }
 }

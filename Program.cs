@@ -42,6 +42,7 @@ void Menu(Cadeteria cadeteria)
         Console.WriteLine("2- Cambiar de estado");
         Console.WriteLine("3- Reasignar pedido");
         Console.WriteLine("4- Cargar datos en informe y salir.");
+        Console.Write("Ingrese opcion:");
         cont = IngresarEntero();
         switch (cont)
         {

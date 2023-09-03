@@ -116,52 +116,37 @@ class Archivo
         }
     }
 
-    public List<Pedido> LeerInforme()
-    {
-        string ruta = "Informe.csv";
-        List<Pedido> listaPedido= new List<Pedido>();
-        try
-        {   
-            using(StreamReader reader = new StreamReader(ruta))
-            {
-                while(!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-                    string[] dato = line.Split(',');
-                    Pedido pedido = new Pedido();
-                    pedido.NumeroPedido = int.Parse(dato[0]);
-                    pedido.Observacion = dato[1];
-                    pedido.Cliente.NombreCliente = dato[3];
-                    pedido.Cliente.Direccion = dato[4];
-                    pedido.Cliente.Telefono = int.Parse(dato[5]);
-                    pedido.Cliente.Datosreferencia = dato[6];
-                    pedido.Estado = bool.Parse(dato[7]);
-                    listaPedido.Add(pedido);
-                }
-            }  
-            return listaPedido;          
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error al escribir datos: " + ex.Message);
-            return listaPedido;
-        }
-
-    }
-    public void CargarInforme(Pedido pedido)
+    public void CargarInforme(Cadeteria cadeteria)
     {
         string ruta = "Informe.csv";
         try
         {
             using (StreamWriter writer = new StreamWriter(ruta))
             {
-                
-                    writer.WriteLine($"{pedido.NumeroPedido},{pedido.Observacion},{pedido.Cliente.NombreCliente},{pedido.Cliente.Direccion},{pedido.Cliente.Telefono},{pedido.Cliente.Datosreferencia},{pedido.Estado}");   
+                var total = 0.00;
+                foreach (var cadete in cadeteria.Listaempleados)
+                {
+                    writer.WriteLine($"{cadete.Id},{cadete.Nombre},{cadete.Telefono},{CantidadPedido(cadete)},{cadete.JornalACobrar()}");
+                    total += cadete.JornalACobrar();    
+                }     
+                writer.WriteLine($"Total = {total}");
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine("Error al escribir datos: " + ex.Message);
         }
+    }
+    private int CantidadPedido(Cadete cadete)
+    {
+        int cont = 0;
+        foreach (var pedido in cadete.Listapedido)
+        {
+            if(pedido.Estado)
+            {
+                cont++;
+            }
+        }
+        return cont;
     }
 }

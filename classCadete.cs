@@ -28,7 +28,7 @@ class Cadete
         Listapedido = new List<Pedido>();
     }
 
-    public void JornalACobrar()
+    public double JornalACobrar()
     {
         int cont = 0;
         double cobrar;
@@ -40,7 +40,7 @@ class Cadete
             }
         }
         cobrar = 500*cont;
-        Console.WriteLine($"Cobrará: ${cobrar}");
+        return cobrar;
     }
     public void AgregarPedido(Pedido pedido)
     {

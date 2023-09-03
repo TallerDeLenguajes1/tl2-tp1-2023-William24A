@@ -33,6 +33,7 @@ else
 void Menu(Cadeteria cadeteria)
 {
     int cont;
+    var archivo = new Archivo();
     do
     {
         Console.WriteLine("Bienvenido al sistema");
@@ -40,7 +41,7 @@ void Menu(Cadeteria cadeteria)
         Console.WriteLine("Y asignar pedido a cadete");
         Console.WriteLine("2- Cambiar de estado");
         Console.WriteLine("3- Reasignar pedido");
-        Console.WriteLine("4- Salir");
+        Console.WriteLine("4- Cargar datos en informe y salir.");
         cont = IngresarEntero();
         switch (cont)
         {
@@ -95,6 +96,7 @@ void Menu(Cadeteria cadeteria)
                 break;
             default:
                 Console.WriteLine("Muchas gracias por elegirnos.");
+                archivo.CargarInforme(cadeteria);
                 break;
         }
     } while (cont != 4);

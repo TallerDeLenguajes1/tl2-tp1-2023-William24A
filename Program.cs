@@ -3,49 +3,109 @@ using System;
 using CadeteriaUtilizar;
 using ArchivosCSVUtilizar;
 using CadeteUtilizar;
+using System.ComponentModel.Design;
 
 var archivo = new Archivo();
 string ruta = "DatosCadeterias.csv";
 string ruta1 = "DatosCadetes.csv";
-var ListadeCadeterias = new List<Cadeteria>();
+var cadeterias = new Cadeteria();
 
 if(archivo.ExisteArchivo(ruta))
 {
-    ListadeCadeterias = archivo.LeerDatosCadeteria();
-    string nombreCadeteria;
+   Console.WriteLine("Existe");
+   cadeterias = archivo.LeerDatosCadeteria();
+   if(archivo.ExisteArchivo(ruta1))
+   {
     Console.WriteLine("Existe");
-    Console.WriteLine("Ingrese nombre de la cadeteria: ");
-    nombreCadeteria = Console.ReadLine();
-    
-    for(int i = 0; i<ListadeCadeterias.Count ; i++)
-    {
-        if(ListadeCadeterias[i].Nombre == nombreCadeteria)
-        {
-            if(archivo.ExisteArchivo(ruta1))
-            {
-                ListadeCadeterias[i] = archivo.LeerDatosCadetes(ListadeCadeterias[i]);
-            }
-            else
-            {
-                Console.WriteLine("No existen archivo.");
-                
-                Cadete cadete = new Cadete(1,"Javier","su casa", 123456);
-                ListadeCadeterias[i].AgregarCadete(cadete);
-                Cadete cadete1 = new Cadete(2,"William","su casa", 134556);
-                ListadeCadeterias[i].AgregarCadete(cadete1);
-                archivo.CargarDatosCadetes(ListadeCadeterias[i]);
-            }
-        }
-        else
-        {
-            Console.WriteLine("No existe la cadeteria.");
-        }
-    }
+    cadeterias = archivo.LeerDatosCadetes(cadeterias);
+   }
+   else
+   {
+    Console.WriteLine("No hay cadetes trabajando debe agregar");
+   }
+   Menu(cadeterias);
 }
 else
 {
-    Cadeteria cadeteria = new Cadeteria("ELPancho",1234545);
-    
-    ListadeCadeterias.Add(cadeteria);
-    archivo.CargarDatosCadeterias(ListadeCadeterias);
+    Console.WriteLine("Ingrese datos de cadeteria.");
+}
+
+void Menu(Cadeteria cadeteria)
+{
+    int cont;
+    do
+    {
+        Console.WriteLine("Bienvenido al sistema");
+        Console.WriteLine("1- Dar alta pedido");
+        Console.WriteLine("Y asignar pedido a cadete");
+        Console.WriteLine("2- Cambiar de estado");
+        Console.WriteLine("3- Reasignar pedido");
+        Console.WriteLine("4- Salir");
+        cont = IngresarEntero();
+        switch (cont)
+        {
+            case 1:
+                Console.Write("Ingrese el numero de pedido: ");
+                int numeroPedido = IngresarEntero();
+                Console.Write("Ingrese la observacion sobre el pedido: ");
+                string observacion = Console.ReadLine();
+                Console.Write("Ingrese el nombre del cliente: ");
+                string nombreCliente = Console.ReadLine(); 
+                Console.Write("Ingrese la direccion del cliente: ");
+                string direccion = Console.ReadLine(); 
+                Console.Write("Ingrese el numero de telefono del cliente: ");
+                int telefono = IngresarEntero();
+                Console.Write("Ingrese datos que referencien la casa del cliente: ");
+                string datosreferencia = Console.ReadLine();
+
+                var pedido = cadeteria.CrearPedido(numeroPedido,observacion,nombreCliente,direccion,telefono,datosreferencia);
+                Console.WriteLine("Pedido fue creado. Asignar pedido a un cadete.");
+                cadeteria.AgregarPedidoCadete(pedido);
+                Console.WriteLine("Pedido a sido asignado");
+                break;
+            case 2:
+                Console.WriteLine("Ingrese codigo del cadete:");
+                int numeroCadete = IngresarEntero();
+                Console.WriteLine("Ingrese el numero del pedido:");
+                int numero = IngresarEntero();
+                if(cadeteria.CambiarEstado(numeroCadete,numero))
+                {
+                    Console.WriteLine("Cambios realizados.");
+                }
+                else
+                {
+                    Console.WriteLine("No se realizo cambios.");
+                }
+                break;
+            case 3:
+                Console.WriteLine("Ingresar codigo del cadete 1:");
+                var codigoCadete1 = IngresarEntero();
+                Console.WriteLine("Ingresar codigo del cadete 2");
+                var codigoCadete2 = IngresarEntero();
+                Console.WriteLine("Ingresar codigo del pedido: ");
+                var codigoPedido = IngresarEntero();
+                if(cadeteria.ReasignarPedido(codigoCadete1, codigoCadete2, codigoPedido))
+                {
+                    Console.WriteLine("Pedido reasignado.");
+                }
+                else
+                {
+                    Console.WriteLine("El pedido no se pudo reasignar.");
+                }
+                break;
+            default:
+                Console.WriteLine("Muchas gracias por elegirnos.");
+                break;
+        }
+    } while (cont != 4);
+}
+
+int IngresarEntero()
+{   
+    int num;
+    if(int.TryParse(Console.ReadLine(), out num)){
+        return num;
+    }else{
+        return -1111;
+    }
 }

@@ -50,16 +50,16 @@ class Cadete
     {
         Listapedido.RemoveAll(p => p.NumeroPedido == numeroPedido);
     }
-    public void CambiarEstado(int numeroPedido)
+    public bool CambiarEstado(int numeroPedido)
     {
-        var archivo = new Archivo();
         foreach (var item in Listapedido)
         {
             if(item.NumeroPedido == numeroPedido)
             {
                 item.Estado = true;
-                archivo.CargarInforme(item);
+                return true;
             }
         }
+        return false;
     }
 }

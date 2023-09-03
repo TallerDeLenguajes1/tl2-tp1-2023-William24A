@@ -5,31 +5,29 @@ using PedidoUtilizar;
 namespace ArchivosCSVUtilizar;
 class Archivo
 {
-    public List<Cadeteria> LeerDatosCadeteria()
+    public Cadeteria LeerDatosCadeteria()
     {
         string ruta = "DatosCadeterias.csv";
-        List<Cadeteria> cadeterias = new List<Cadeteria>();
+        Cadeteria cadeteria = new Cadeteria();
         try
         {   
             using(StreamReader reader = new StreamReader(ruta))
             {
                 while(!reader.EndOfStream)
                 {
-                    Cadeteria cadeteria = new Cadeteria();
                     string line = reader.ReadLine();
                     string[] dato = line.Split(',');
 
                     cadeteria.Nombre = dato[0];
                     cadeteria.Telefono = int.Parse(dato[1]);
-                    cadeterias.Add(cadeteria);
                 }
             }  
-            return cadeterias;          
+            return cadeteria;          
         }
         catch (Exception ex)
         {
             Console.WriteLine("Error al escribir datos: " + ex.Message);
-            return cadeterias;
+            return cadeteria;
         }
 
     }
@@ -61,17 +59,14 @@ class Archivo
         }
 
     }
-    public void CargarDatosCadeterias(List<Cadeteria> cadeterias)
+    public void CargarDatosCadeterias(Cadeteria cadeteria)
     {
         string ruta = "DatosCadeterias.csv";
         try
         {
             using (StreamWriter writer = new StreamWriter(ruta))
             {
-                foreach (var item in cadeterias)
-                {
-                    writer.WriteLine($"{item.Nombre},{item.Telefono}");
-                }
+                    writer.WriteLine($"{cadeteria.Nombre},{cadeteria.Telefono}");
             }
         }
         catch (Exception ex)

@@ -101,6 +101,7 @@ void Menu(Cadeteria cadeteria)
                     List<Pedido> pedidosLeer = archivo.LeerInforme();
                     int contCantidad = 0; // Inicializar en 0
                     double montoTotal = 0.00;
+                    var ruta2 = "Informe.csv";
 
                     foreach (var pedidoVer in pedidosLeer)
                     {
@@ -108,14 +109,22 @@ void Menu(Cadeteria cadeteria)
                     }
 
                     montoTotal = 500.00 * contCantidad;
-
-                    foreach (var cadete in cadeteria.Listaempleados)
+                    if(contCantidad != 0 && archivo.ExisteArchivo(ruta2))
                     {
-                        int pedidosEntregadosPorCadete = cadete.JornalACobrarCantidad(); // Obtener la cantidad de pedidos entregados por el cadete
-                        Console.WriteLine($"ID: {cadete.Id}\nNombre: {cadete.Nombre}\nCantidad de pedidos entregados: {pedidosEntregadosPorCadete}\nGanancia: {pedidosEntregadosPorCadete * 500.00}");
+                        foreach (var cadete in cadeteria.Listaempleados)
+                        {
+                            int pedidosEntregadosPorCadete = cadete.JornalACobrarCantidad(); // Obtener la cantidad de pedidos entregados por el cadete
+                            double cantidadPedidos = Convert.ToDouble(pedidosEntregadosPorCadete);
+                            Console.WriteLine($"ID: {cadete.Id}\nNombre: {cadete.Nombre}\nCantidad promedio de pedidos entregados: {cantidadPedidos/contCantidad}\nGanancia: {cantidadPedidos * 500.00}");
+                            
+                        }
                     }
-
+                    else
+                    {
+                        Console.WriteLine("Hoy no se vendieron productos.");
+                    }
                     Console.WriteLine($"Total ganancias: {montoTotal}");
+                    
                 break;
         }
     } while (cont != 4);

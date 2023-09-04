@@ -132,22 +132,16 @@ class Archivo
                 string line = reader.ReadLine();
                 string[] dato = line.Split(',');
                 
-                if (dato.Length >= 7) // Asegura que hay suficientes campos en la línea
+                if (dato.Length >= 6) // Asegura que hay suficientes campos en la línea
                 {
                     Pedido pedido = new Pedido();
                     pedido.NumeroPedido = int.Parse(dato[0]);
                     pedido.Observacion = dato[1];
                     
                     // Crea una instancia de Cliente y asigna sus propiedades
-                    pedido.Cliente = new Cliente();
-                    {
-                        pedido.Cliente.NombreCliente = dato[3];
-                        pedido.Cliente.Direccion = dato[4];
-                        pedido.Cliente.Telefono = int.Parse(dato[5]);
-                        pedido.Cliente.Datosreferencia = dato[6];
-                    };
+                    pedido.Cliente = new Cliente(dato[2],dato[3],int.Parse(dato[4]),dato[5]);
                     
-                    pedido.Estado = bool.Parse(dato[7]);
+                    pedido.Estado = bool.Parse(dato[6]);
                     listaPedido.Add(pedido);
                 }
             }

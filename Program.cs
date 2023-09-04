@@ -4,6 +4,7 @@ using CadeteriaUtilizar;
 using ArchivosCSVUtilizar;
 using CadeteUtilizar;
 using System.ComponentModel.Design;
+using PedidoUtilizar;
 
 var archivo = new Archivo();
 string ruta = "DatosCadeterias.csv";
@@ -96,8 +97,25 @@ void Menu(Cadeteria cadeteria)
                 }
                 break;
             default:
-                Console.WriteLine("Muchas gracias por elegirnos.");
-                archivo.CargarInforme(cadeteria);
+                    Console.WriteLine("Muchas gracias por elegirnos.");
+                    List<Pedido> pedidosLeer = archivo.LeerInforme();
+                    int contCantidad = 0; // Inicializar en 0
+                    double montoTotal = 0.00;
+
+                    foreach (var pedidoVer in pedidosLeer)
+                    {
+                        contCantidad++; // Incrementar el contador por cada pedido
+                    }
+
+                    montoTotal = 500.00 * contCantidad;
+
+                    foreach (var cadete in cadeteria.Listaempleados)
+                    {
+                        int pedidosEntregadosPorCadete = cadete.JornalACobrarCantidad(); // Obtener la cantidad de pedidos entregados por el cadete
+                        Console.WriteLine($"ID: {cadete.Id}\nNombre: {cadete.Nombre}\nCantidad de pedidos entregados: {pedidosEntregadosPorCadete}\nGanancia: {pedidosEntregadosPorCadete * 500.00}");
+                    }
+
+                    Console.WriteLine($"Total ganancias: {montoTotal}");
                 break;
         }
     } while (cont != 4);

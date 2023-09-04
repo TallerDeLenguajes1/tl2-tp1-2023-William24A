@@ -28,10 +28,9 @@ class Cadete
         Listapedido = new List<Pedido>();
     }
 
-    public double JornalACobrar()
+    public int JornalACobrarCantidad()
     {
         int cont = 0;
-        double cobrar;
         foreach (var item in Listapedido)
         {
             if(item.VerEstado())
@@ -39,8 +38,7 @@ class Cadete
                 cont++;
             }
         }
-        cobrar = 500*cont;
-        return cobrar;
+        return cont; 
     }
     public void AgregarPedido(Pedido pedido)
     {
@@ -52,11 +50,13 @@ class Cadete
     }
     public bool CambiarEstado(int numeroPedido)
     {
+        var archivo = new Archivo();
         foreach (var item in Listapedido)
         {
             if(item.NumeroPedido == numeroPedido)
             {
                 item.Estado = true;
+                archivo.CargarInforme(item);
                 return true;
             }
         }

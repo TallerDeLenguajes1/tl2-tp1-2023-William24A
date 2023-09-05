@@ -27,69 +27,51 @@ class Cadeteria
     internal List<Cadete> Listaempleados { get => listaempleados; set => listaempleados = value; }
     internal List<Pedido> Listapedios {get => listapedidos;}
 
-    public Cadete CrearCadete(int id, string nombre, string direccion, int telefono)
+    public bool CrearCadeteAgregar(int id, string nombre, string direccion, int telefono)
     {
         Cadete cadete = new Cadete(id,nombre,direccion,telefono);
-        return cadete;
-    }
-    public void AgregarCadete(Cadete cadete)
-    {
         Listaempleados.Add(cadete);
+        return true;
     }
     public void EliminarCadete(string nombreEmpleado)
     {
         Listaempleados.RemoveAll(e => e.Nombre == nombreEmpleado );
     }
-    public Pedido CrearPedido(int numeroPedido, string? observacion,string nombreCliente, string direccion, int telefono, string datosreferencia)
+    public bool CrearPedidoAgregar(int numeroPedido, string? observacion,string nombreCliente, string direccion, int telefono, string datosreferencia)
     {
         Pedido pedido = new Pedido(numeroPedido, observacion, nombreCliente, direccion, telefono, datosreferencia);
-        return pedido;
+        Listapedios.Add(pedido);
+        return true;
     }
-    public void AgregarPedidoCadete(Pedido pedido)
+    
+    public bool ReasignarPedido(int codigoCadete1, int codigoPedido)
     {
-        if(listaempleados.Count() != 0)
+        foreach (var pedido in Listapedios)
         {
-            var rand= new Random();
-            listaempleados[rand.Next(0,listaempleados.Count)].AgregarPedido(pedido);
-        }
-        else
-        {
-            Console.WriteLine("No hay cadetes.");
-        }
-    }
-    public bool ReasignarPedido(int codigoCadete1, int codigoCadete2, int codigoPedido)
-    {
-        foreach (var cadete in listaempleados)
-        {
-            if(cadete.Id == codigoCadete1)
+            if(pedido.NumeroPedido == codigoPedido)
             {
-                foreach (var pedido in cadete.Listapedido)
+                foreach (var cadete in Listaempleados)
                 {
-                    if(pedido.NumeroPedido == codigoPedido)
+                    if(cadete.Id == codigoCadete1)
                     {
-                       foreach (var cadete2B in Listaempleados)
-                       {
-                            if(cadete2B.Id == codigoCadete2)
-                            {
-                                cadete2B.AgregarPedido(pedido);
-                                break;
-                            }
-                       }
-                       cadete.EliminarPedio(codigoPedido);
-                       return true;
+                        pedido.Cadete.Id = cadete.Id;
+                        pedido.Cadete.Nombre = cadete.Nombre;
+                        pedido.Cadete.Direccion = cadete.Direccion;
+                        pedido.Cadete.Telefono = cadete.Telefono;
+                        return true;
                     }
                 }
             }
         }
         return false;
     }
-    public bool CambiarEstado(int codigoCadete, int codigoPedido)
+    public bool CambiarEstado(int codigoPedido)
     {
-        foreach (var cadete in Listaempleados)
+        foreach (var pedido in Listapedios)
         {
-            if(cadete.Id == codigoCadete)
+            if(pedido.NumeroPedido == codigoPedido)
             {
-                return cadete.CambiarEstado(codigoPedido);
+                return pedido.CambiarEstado();
             }
         }
         return false;

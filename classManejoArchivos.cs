@@ -44,12 +44,7 @@ class Archivo
                 {
                     string line = reader.ReadLine();
                     string[] dato = line.Split(',');
-                    Cadete cadete = new Cadete();
-                    cadete.Id = int.Parse(dato[0]);
-                    cadete.Nombre = dato[1];
-                    cadete.Direccion = dato[2];
-                    cadete.Telefono = int.Parse(dato[3]);
-                    cadeteria.AgregarCadete(cadete);
+                    cadeteria.CrearCadeteAgregar(int.Parse(dato[0]),dato[1],dato[2],int.Parse(dato[3]));
                 }
             }  
             return cadeteria;          

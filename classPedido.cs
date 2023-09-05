@@ -40,5 +40,10 @@ class Pedido
     {
         return Estado;
     }
+    public bool CambiarEstado()
+    {
+        this.Estado = true;
+        return true;
+    }
 
 }

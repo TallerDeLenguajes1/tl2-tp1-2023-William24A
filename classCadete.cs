@@ -7,16 +7,15 @@ class Cadete
     private string nombre;
     private string direccion;
     private int telefono;
-    private List<Pedido> listapedido;
+    
 
     public int Id { get => id; set => id = value; }
     public string Nombre { get => nombre; set => nombre = value; }
     public string Direccion { get => direccion; set => direccion = value; }
     public int Telefono { get => telefono; set => telefono = value; }
-    internal List<Pedido> Listapedido { get => listapedido; set => listapedido = value; }
+   
     public Cadete()
     {
-        Listapedido = new List<Pedido>();
     }
 
     public Cadete(int id, string nombre, string direccion, int telefono)
@@ -25,41 +24,7 @@ class Cadete
         Nombre = nombre;
         Direccion = direccion;
         Telefono = telefono;
-        Listapedido = new List<Pedido>();
+        
     }
 
-    public int JornalACobrarCantidad()
-    {
-        int cont = 0;
-        foreach (var item in Listapedido)
-        {
-            if(item.VerEstado())
-            {
-                cont++;
-            }
-        }
-        return cont; 
-    }
-    public void AgregarPedido(Pedido pedido)
-    {
-        Listapedido.Add(pedido);
-    }
-    public void EliminarPedio(int numeroPedido)
-    {
-        Listapedido.RemoveAll(p => p.NumeroPedido == numeroPedido);
-    }
-    public bool CambiarEstado(int numeroPedido)
-    {
-        var archivo = new Archivo();
-        foreach (var item in Listapedido)
-        {
-            if(item.NumeroPedido == numeroPedido)
-            {
-                item.Estado = true;
-                archivo.CargarInforme(item);
-                return true;
-            }
-        }
-        return false;
-    }
 }

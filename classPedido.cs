@@ -1,4 +1,6 @@
 namespace PedidoUtilizar;
+
+using CadeteUtilizar;
 using ClienteUtilizar;
 class Pedido
 {
@@ -6,12 +8,13 @@ class Pedido
     private string? observacion;
     private Cliente cliente;
     private bool estado;
+    private Cadete cadete;
 
     public int NumeroPedido { get => numeroPedido; set => numeroPedido = value; }
     public string? Observacion { get => observacion; set => observacion = value; }
     internal Cliente Cliente { get => cliente; set => cliente = value; }
     public bool Estado { get => estado; set => estado = value; }
-
+    public Cadete Cadete { get => cadete;}
     public Pedido()
     {
         
@@ -22,6 +25,7 @@ class Pedido
         this.Observacion = observacion;
         Cliente = new Cliente(nombreCliente,direccion,telefono,datosreferencia);
         Estado = false;
+        this.cadete = new Cadete();
     }
 
     public void VerDireccionDelCliente()

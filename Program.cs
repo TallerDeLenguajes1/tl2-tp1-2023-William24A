@@ -61,17 +61,15 @@ void Menu(Cadeteria cadeteria)
                 Console.Write("Ingrese datos que referencien la casa del cliente: ");
                 string datosreferencia = Console.ReadLine();
 
-                var pedido = cadeteria.CrearPedido(numeroPedido,observacion,nombreCliente,direccion,telefono,datosreferencia);
-                Console.WriteLine("Pedido fue creado. Asignar pedido a un cadete.");
-                cadeteria.AgregarPedidoCadete(pedido);
-                Console.WriteLine("Pedido a sido asignado");
+                var pedido = cadeteria.CrearPedidoAgregar(numeroPedido,observacion,nombreCliente,direccion,telefono,datosreferencia);
+                Console.WriteLine("Pedido fue creado.");
                 break;
             case 2:
                 Console.WriteLine("Ingrese codigo del cadete:");
                 int numeroCadete = IngresarEntero();
                 Console.WriteLine("Ingrese el numero del pedido:");
                 int numero = IngresarEntero();
-                if(cadeteria.CambiarEstado(numeroCadete,numero))
+                if(cadeteria.CambiarEstado(numero))
                 {
                     Console.WriteLine("Cambios realizados.");
                 }
@@ -87,7 +85,7 @@ void Menu(Cadeteria cadeteria)
                 var codigoCadete2 = IngresarEntero();
                 Console.WriteLine("Ingresar codigo del pedido: ");
                 var codigoPedido = IngresarEntero();
-                if(cadeteria.ReasignarPedido(codigoCadete1, codigoCadete2, codigoPedido))
+                if(cadeteria.ReasignarPedido(codigoCadete1,codigoPedido))
                 {
                     Console.WriteLine("Pedido reasignado.");
                 }
@@ -113,7 +111,7 @@ void Menu(Cadeteria cadeteria)
                     {
                         foreach (var cadete in cadeteria.Listaempleados)
                         {
-                            int pedidosEntregadosPorCadete = cadete.JornalACobrarCantidad(); // Obtener la cantidad de pedidos entregados por el cadete
+                            int pedidosEntregadosPorCadete = cadeteria.JornalACobrarCantidad(cadete.Id); // Obtener la cantidad de pedidos entregados por el cadete
                             double cantidadPedidos = Convert.ToDouble(pedidosEntregadosPorCadete);
                             Console.WriteLine($"ID: {cadete.Id}\nNombre: {cadete.Nombre}\nCantidad promedio de pedidos entregados: {cantidadPedidos/contCantidad}\nGanancia: {cantidadPedidos * 500.00}");
                             

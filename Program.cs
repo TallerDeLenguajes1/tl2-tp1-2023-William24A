@@ -1,9 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System;
 using CadeteriaUtilizar;
 using ArchivosUtilizar;
-using CadeteUtilizar;
-using System.ComponentModel.Design;
 using PedidoUtilizar;
 
 AccesoADatos archivo = new AccesoADatos();

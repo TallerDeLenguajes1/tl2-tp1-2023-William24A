@@ -8,37 +8,37 @@ using System.Text.Json;
 namespace ArchivosUtilizar;
 class AccesoADatos
 {
-    public Cadeteria LeerDatosCadeteria(string ruta)
+    public virtual Cadeteria LeerDatosCadeteria(string ruta)
     {
         Cadeteria cadeteria = new Cadeteria();
         return cadeteria;
     }
-    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
+    public virtual Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
     {
         return cadeteria;
     }
-    public void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
+    public virtual void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
      {
      }
-    public void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
+    public virtual void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
     {
     }
-    public bool ExisteArchivo(string ruta)
+    public virtual bool ExisteArchivo(string ruta)
     {
         return true;
     }
-    public List<Pedido> LeerInforme(string ruta)
+    public virtual List<Pedido> LeerInforme(string ruta)
     {
         List<Pedido> listaPedidos = new List<Pedido>();
         return listaPedidos;
     }
-    public void CargarInforme(Pedido pedido, string ruta)
+    public virtual void CargarInforme(Pedido pedido, string ruta)
     {
     }
 }
 class AccesoCSV: AccesoADatos
 {
-    public Cadeteria LeerDatosCadeteria(string ruta)
+    public override Cadeteria LeerDatosCadeteria(string ruta)
     {
         Cadeteria cadeteria = new Cadeteria();
         try
@@ -63,7 +63,7 @@ class AccesoCSV: AccesoADatos
         }
 
     }
-    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
+    public override Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
     {
         try
         {   
@@ -85,7 +85,7 @@ class AccesoCSV: AccesoADatos
         }
 
     }
-    public void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
+    public override void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
     {
         try
         {
@@ -100,7 +100,7 @@ class AccesoCSV: AccesoADatos
         }
     }
 
-    public void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
+    public override void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
     {
         try
         {
@@ -118,7 +118,7 @@ class AccesoCSV: AccesoADatos
         }
     }
 
-    public bool ExisteArchivo(string ruta)
+    public override bool ExisteArchivo(string ruta)
     {
         if (File.Exists(ruta))
         {
@@ -140,7 +140,7 @@ class AccesoCSV: AccesoADatos
         }
     }
 
-   public List<Pedido> LeerInforme(string ruta)
+   public override List<Pedido> LeerInforme(string ruta)
 {
     List<Pedido> listaPedido = new List<Pedido>();
     
@@ -180,7 +180,7 @@ class AccesoCSV: AccesoADatos
         return listaPedido;
     }
 }
-    public void CargarInforme(Pedido pedido, string ruta)
+    public override void CargarInforme(Pedido pedido, string ruta)
     {
         try
         {
@@ -200,7 +200,7 @@ class AccesoCSV: AccesoADatos
 }
 class AccesoJSON: AccesoADatos
 {
-    public Cadeteria LeerDatosCadeteria(string ruta)
+    public override Cadeteria LeerDatosCadeteria(string ruta)
     {
         Cadeteria cadeteria = null;
 
@@ -210,7 +210,7 @@ class AccesoJSON: AccesoADatos
 
         return cadeteria;
     }
-    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
+    public override Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
     {
         string pathJSON = Directory.GetCurrentDirectory()+ruta;
         string Json = File.ReadAllText(pathJSON); //Leer archivo y guardar
@@ -219,7 +219,7 @@ class AccesoJSON: AccesoADatos
             
         return cadeteria;
     }
-    public void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
+    public override void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
     {
         string Json = JsonSerializer.Serialize<Cadeteria>(cadeteria);
         string pathJSON = Directory.GetCurrentDirectory()+ruta;
@@ -228,7 +228,7 @@ class AccesoJSON: AccesoADatos
                 sw.Close();
             }
     }
-    public void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
+    public override void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
     {
         string Json = JsonSerializer.Serialize<List<Cadete>>(cadeteria.Listaempleados);
         string pathJSON = Directory.GetCurrentDirectory()+ruta;
@@ -237,7 +237,7 @@ class AccesoJSON: AccesoADatos
                 sw.Close();
             }
     }
-    public bool ExisteArchivo(string ruta)
+    public override bool ExisteArchivo(string ruta)
     {
         if (File.Exists(ruta))
         {
@@ -258,7 +258,7 @@ class AccesoJSON: AccesoADatos
             return false;
         }
     }
-    public List<Pedido> LeerInforme(string ruta)
+    public override List<Pedido> LeerInforme(string ruta)
     {
         List<Pedido> listaPedidos = new List<Pedido>();
         string pathJSON = Directory.GetCurrentDirectory()+ruta;
@@ -268,7 +268,7 @@ class AccesoJSON: AccesoADatos
     
         return listaPedidos;
     }
-    public void CargarInforme(Pedido pedido, string ruta)
+    public override void CargarInforme(Pedido pedido, string ruta)
     {
         string Json = JsonSerializer.Serialize<Pedido>(pedido);
         string pathJSON = Directory.GetCurrentDirectory()+ruta;

@@ -17,7 +17,8 @@ class Pedido
     public Cadete Cadete { get => cadete;}
     public Pedido()
     {
-        
+        cliente = new Cliente();
+        cadete = new Cadete();
     }
     public Pedido(int numeroPedido, string? observacion,string nombreCliente, string direccion, int telefono, string datosreferencia)
     {

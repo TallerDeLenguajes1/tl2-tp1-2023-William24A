@@ -127,7 +127,7 @@ class Archivo
                 string line = reader.ReadLine();
                 string[] dato = line.Split(',');
                 
-                if (dato.Length >= 6) // Asegura que hay suficientes campos en la línea
+                if (dato.Length >= 9) // Asegura que hay suficientes campos en la línea
                 {
                     Pedido pedido = new Pedido();
                     pedido.NumeroPedido = int.Parse(dato[0]);
@@ -137,6 +137,11 @@ class Archivo
                     pedido.Cliente = new Cliente(dato[2],dato[3],int.Parse(dato[4]),dato[5]);
                     
                     pedido.Estado = bool.Parse(dato[6]);
+                    pedido.Cadete.Id = int.Parse(dato[7]);
+                    pedido.Cadete.Nombre = dato[8];
+                    pedido.Cadete.Direccion = dato[9];
+                    pedido.Cadete.Telefono = int.Parse(dato[10]); 
+
                     listaPedido.Add(pedido);
                 }
             }
@@ -157,7 +162,7 @@ class Archivo
             using (FileStream fs = new FileStream(ruta, FileMode.Append, FileAccess.Write))
             {
                 
-                    var data = $"{pedido.NumeroPedido},{pedido.Observacion},{pedido.Cliente.NombreCliente},{pedido.Cliente.Direccion},{pedido.Cliente.Telefono},{pedido.Cliente.Datosreferencia},{pedido.Estado}\n";   
+                    var data = $"{pedido.NumeroPedido},{pedido.Observacion},{pedido.Cliente.NombreCliente},{pedido.Cliente.Direccion},{pedido.Cliente.Telefono},{pedido.Cliente.Datosreferencia},{pedido.Estado},{pedido.Cadete.Id},{pedido.Cadete.Nombre},{pedido.Cadete.Direccion},{pedido.Cadete.Telefono}\n";   
                     byte[] bytes = Encoding.UTF8.GetBytes(data);
                     fs.Write(bytes, 0, bytes.Length);
             }

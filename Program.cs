@@ -3,7 +3,9 @@ using CadeteriaUtilizar;
 using ArchivosUtilizar;
 using PedidoUtilizar;
 
-AccesoADatos archivo = new AccesoADatos();
+AccesoADatos archivoC = new AccesoCSV();
+AccesoADatos archivoJ = new AccesoCSV();
+
 string ruta = "DatosCadeterias.csv";
 string ruta1 = "DatosCadetes.csv";
 string rutaJson = "DatosCadeterias.Json";
@@ -24,40 +26,58 @@ do
         case 1:
             rutaF = ruta;
             rutaFC = ruta1;
+            if(archivoC.ExisteArchivo(rutaF))
+            {
+                Console.WriteLine("Existe");
+                cadeterias = archivoC.LeerDatosCadeteria(rutaF);
+                if(archivoC.ExisteArchivo(rutaFC))
+                {
+                    Console.WriteLine("Existe");
+                    cadeterias = archivoC.LeerDatosCadetes(cadeterias,rutaFC);
+                }
+                else
+                {
+                    Console.WriteLine("No hay cadetes trabajando debe agregar");
+                }
+                Menu(cadeterias, rutaF);
+            }
+            else
+            {
+                Console.WriteLine("Ingrese cadeteria");
+            }
             break;
         case 2:
             rutaF = rutaJson;
             rutaFC = rutaJson1;
+            if(archivoJ.ExisteArchivo(rutaF))
+            {
+                Console.WriteLine("Existe");
+                cadeterias = archivoJ.LeerDatosCadeteria(rutaF);
+                if(archivoC.ExisteArchivo(rutaFC))
+                {
+                    Console.WriteLine("Existe");
+                    cadeterias = archivoJ.LeerDatosCadetes(cadeterias,rutaFC);
+                }
+                else
+                {
+                    Console.WriteLine("No hay cadetes trabajando debe agregar");
+                }
+                Menu(cadeterias, rutaF);
+            }
+            else
+            {
+                Console.WriteLine("Ingrese cadeteria");
+            }
             break;
         default:
             break;
     }
 } while (op != 1 && op != 2);
 
-if(archivo.ExisteArchivo(rutaF))
-{
-   Console.WriteLine("Existe");
-   cadeterias = archivo.LeerDatosCadeteria(rutaF);
-   if(archivo.ExisteArchivo(rutaFC))
-   {
-    Console.WriteLine("Existe");
-    cadeterias = archivo.LeerDatosCadetes(cadeterias,rutaFC);
-   }
-   else
-   {
-    Console.WriteLine("No hay cadetes trabajando debe agregar");
-   }
-   Menu(cadeterias, rutaF);
-}
-else
-{
-   Console.WriteLine("Ingrese cadeteria");
-}
-
 void Menu(Cadeteria cadeteria, string ruta)
 {
     int cont;
-    AccesoADatos archivo = new AccesoADatos();
+    AccesoADatos archivo = new AccesoCSV();
     do
     {
         Console.WriteLine("Bienvenido al sistema");

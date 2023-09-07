@@ -2,7 +2,7 @@ namespace CadeteriaUtilizar;
 using CadeteUtilizar;
 using PedidoUtilizar;
 
-class Cadeteria 
+public class Cadeteria 
 {
     private string nombre;
     private int telefono;

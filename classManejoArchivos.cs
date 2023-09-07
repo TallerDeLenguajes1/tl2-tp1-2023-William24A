@@ -6,16 +6,15 @@ using System.Text;
 using System.Text.Json;
 
 namespace ArchivosUtilizar;
-class AccesoADatos
+public abstract class AccesoADatos
 {
     public virtual Cadeteria LeerDatosCadeteria(string ruta)
     {
-        Cadeteria cadeteria = new Cadeteria();
-        return cadeteria;
+        return null;
     }
     public virtual Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
     {
-        return cadeteria;
+        return null;
     }
     public virtual void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
      {
@@ -25,12 +24,11 @@ class AccesoADatos
     }
     public virtual bool ExisteArchivo(string ruta)
     {
-        return true;
+        return false;
     }
     public virtual List<Pedido> LeerInforme(string ruta)
     {
-        List<Pedido> listaPedidos = new List<Pedido>();
-        return listaPedidos;
+        return null;
     }
     public virtual void CargarInforme(Pedido pedido, string ruta)
     {

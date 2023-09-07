@@ -2,7 +2,7 @@ namespace PedidoUtilizar;
 
 using CadeteUtilizar;
 using ClienteUtilizar;
-class Pedido
+public class Pedido
 {
     private int numeroPedido;
     private string? observacion;

@@ -3,9 +3,40 @@ using CadeteUtilizar;
 using PedidoUtilizar;
 using ClienteUtilizar;
 using System.Text;
+using System.Text.Json;
 
 namespace ArchivosCSVUtilizar;
-class Archivo
+class AccesoADatos
+{
+    public Cadeteria LeerDatosCadeteria()
+    {
+        Cadeteria cadeteria = new Cadeteria();
+        return cadeteria;
+    }
+    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria)
+    {
+        return cadeteria;
+    }
+    public void CargarDatosCadeterias(Cadeteria cadeteria)
+     {
+     }
+    public void CargarDatosCadetes(Cadeteria cadeteria)
+    {
+    }
+    public bool ExisteArchivo(string ruta)
+    {
+        return true;
+    }
+    public List<Pedido> LeerInforme()
+    {
+        List<Pedido> listaPedidos = new List<Pedido>();
+        return listaPedidos;
+    }
+    public void CargarInforme(Pedido pedido)
+    {
+    }
+}
+class AccesoCSV: AccesoADatos
 {
     public Cadeteria LeerDatosCadeteria()
     {
@@ -171,5 +202,85 @@ class Archivo
         {
             Console.WriteLine("Error al escribir datos: " + ex.Message);
         }
+    }
+}
+class AccesoJSON: AccesoADatos
+{
+    public Cadeteria LeerDatosCadeteria(string ruta)
+    {
+        Cadeteria cadeteria = null;
+
+        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+        string Json = File.ReadAllText(pathJSON);
+        cadeteria = JsonSerializer.Deserialize<Cadeteria>(Json);
+
+        return cadeteria;
+    }
+    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
+    {
+        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+        string Json = File.ReadAllText(pathJSON); //Leer archivo y guardar
+
+        cadeteria.Listaempleados = JsonSerializer.Deserialize<List<Cadete>>(Json); // aclaracion de lista
+            
+        return cadeteria;
+    }
+    public void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
+    {
+        string Json = JsonSerializer.Serialize<Cadeteria>(cadeteria);
+        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+            using(StreamWriter sw = new StreamWriter(pathJSON, false)){
+                sw.Write(Json);
+                sw.Close();
+            }
+    }
+    public void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
+    {
+        string Json = JsonSerializer.Serialize<List<Cadete>>(cadeteria.Listaempleados);
+        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+            using(StreamWriter sw = new StreamWriter(pathJSON, false)){
+                sw.Write(Json);
+                sw.Close();
+            }
+    }
+    public bool ExisteArchivo(string ruta)
+    {
+        if (File.Exists(ruta))
+        {
+            if (!string.IsNullOrWhiteSpace(File.ReadAllText(ruta)))
+            {
+                Console.WriteLine("El archivo existe y contiene contenido.");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("El archivo existe pero está vacío.");
+                return false;
+            }
+        }
+        else
+        {
+            Console.WriteLine("El archivo no existe.");
+            return false;
+        }
+    }
+    public List<Pedido> LeerInforme(string ruta)
+    {
+        List<Pedido> listaPedidos = new List<Pedido>();
+        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+        string Json = File.ReadAllText(pathJSON); //Leer archivo y guardar
+
+        listaPedidos = JsonSerializer.Deserialize<List<Pedido>>(Json); // aclaracion de lista
+    
+        return listaPedidos;
+    }
+    public void CargarInforme(Pedido pedido, string ruta)
+    {
+        string Json = JsonSerializer.Serialize<Pedido>(pedido);
+        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+            using(StreamWriter sw = new StreamWriter(pathJSON, false)){
+                sw.Write(Json);
+                sw.Close();
+            }
     }
 }

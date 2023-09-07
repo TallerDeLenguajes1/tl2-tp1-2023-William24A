@@ -5,42 +5,41 @@ using ClienteUtilizar;
 using System.Text;
 using System.Text.Json;
 
-namespace ArchivosCSVUtilizar;
+namespace ArchivosUtilizar;
 class AccesoADatos
 {
-    public Cadeteria LeerDatosCadeteria()
+    public Cadeteria LeerDatosCadeteria(string ruta)
     {
         Cadeteria cadeteria = new Cadeteria();
         return cadeteria;
     }
-    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria)
+    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
     {
         return cadeteria;
     }
-    public void CargarDatosCadeterias(Cadeteria cadeteria)
+    public void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
      {
      }
-    public void CargarDatosCadetes(Cadeteria cadeteria)
+    public void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
     {
     }
     public bool ExisteArchivo(string ruta)
     {
         return true;
     }
-    public List<Pedido> LeerInforme()
+    public List<Pedido> LeerInforme(string ruta)
     {
         List<Pedido> listaPedidos = new List<Pedido>();
         return listaPedidos;
     }
-    public void CargarInforme(Pedido pedido)
+    public void CargarInforme(Pedido pedido, string ruta)
     {
     }
 }
 class AccesoCSV: AccesoADatos
 {
-    public Cadeteria LeerDatosCadeteria()
+    public Cadeteria LeerDatosCadeteria(string ruta)
     {
-        string ruta = "DatosCadeterias.csv";
         Cadeteria cadeteria = new Cadeteria();
         try
         {   
@@ -64,9 +63,8 @@ class AccesoCSV: AccesoADatos
         }
 
     }
-    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria)
+    public Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
     {
-        string ruta = "DatosCadetes.csv";
         try
         {   
             using(StreamReader reader = new StreamReader(ruta))
@@ -87,9 +85,8 @@ class AccesoCSV: AccesoADatos
         }
 
     }
-    public void CargarDatosCadeterias(Cadeteria cadeteria)
+    public void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
     {
-        string ruta = "DatosCadeterias.csv";
         try
         {
             using (StreamWriter writer = new StreamWriter(ruta))
@@ -103,9 +100,8 @@ class AccesoCSV: AccesoADatos
         }
     }
 
-    public void CargarDatosCadetes(Cadeteria cadeteria)
+    public void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
     {
-        string ruta = "DatosCadetes.csv";
         try
         {
             using (StreamWriter writer = new StreamWriter(ruta))
@@ -144,9 +140,8 @@ class AccesoCSV: AccesoADatos
         }
     }
 
-   public List<Pedido> LeerInforme()
+   public List<Pedido> LeerInforme(string ruta)
 {
-    string ruta = "Informe.csv";
     List<Pedido> listaPedido = new List<Pedido>();
     
     try
@@ -185,9 +180,8 @@ class AccesoCSV: AccesoADatos
         return listaPedido;
     }
 }
-    public void CargarInforme(Pedido pedido)
+    public void CargarInforme(Pedido pedido, string ruta)
     {
-        string ruta = "Informe.csv";
         try
         {
             using (FileStream fs = new FileStream(ruta, FileMode.Append, FileAccess.Write))

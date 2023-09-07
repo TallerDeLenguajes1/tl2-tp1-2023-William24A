@@ -1,40 +1,66 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System;
 using CadeteriaUtilizar;
-using ArchivosCSVUtilizar;
+using ArchivosUtilizar;
 using CadeteUtilizar;
 using System.ComponentModel.Design;
 using PedidoUtilizar;
 
-var archivo = new Archivo();
+AccesoADatos archivo = new AccesoADatos();
 string ruta = "DatosCadeterias.csv";
 string ruta1 = "DatosCadetes.csv";
+string rutaJson = "DatosCadeterias.Json";
+string rutaJson1 = "DatosCadetes.Json";
+string rutaF ="";
+string rutaFC ="";
 var cadeterias = new Cadeteria();
+var op = 0;
+do
+{
+    Console.WriteLine("Que tipo de archivo desea utilizar:");
+    Console.WriteLine("1-CSV");
+    Console.WriteLine("2-Json");
+    Console.Write("Opcion: ");
+    op = IngresarEntero();
+    switch (op)
+    {
+        case 1:
+            rutaF = ruta;
+            rutaFC = ruta1;
+            break;
+        case 2:
+            rutaF = rutaJson;
+            rutaFC = rutaJson1;
+            break;
+        default:
+            break;
+    }
+} while (op != 1 && op != 2);
 
-if(archivo.ExisteArchivo(ruta))
+if(archivo.ExisteArchivo(rutaF))
 {
    Console.WriteLine("Existe");
-   cadeterias = archivo.LeerDatosCadeteria();
-   if(archivo.ExisteArchivo(ruta1))
+   cadeterias = archivo.LeerDatosCadeteria(rutaF);
+   if(archivo.ExisteArchivo(rutaFC))
    {
     Console.WriteLine("Existe");
-    cadeterias = archivo.LeerDatosCadetes(cadeterias);
+    cadeterias = archivo.LeerDatosCadetes(cadeterias,rutaFC);
    }
    else
    {
     Console.WriteLine("No hay cadetes trabajando debe agregar");
    }
-   Menu(cadeterias);
+   Menu(cadeterias, rutaF);
 }
 else
 {
-    Console.WriteLine("Ingrese datos de cadeteria.");
+   Console.WriteLine("Ingrese cadeteria");
 }
 
-void Menu(Cadeteria cadeteria)
+void Menu(Cadeteria cadeteria, string ruta)
 {
     int cont;
-    var archivo = new Archivo();
+    AccesoADatos archivo = new AccesoADatos();
     do
     {
         Console.WriteLine("Bienvenido al sistema");
@@ -96,7 +122,7 @@ void Menu(Cadeteria cadeteria)
                 break;
             default:
                     Console.WriteLine("Muchas gracias por elegirnos.");
-                    List<Pedido> pedidosLeer = archivo.LeerInforme();
+                    List<Pedido> pedidosLeer = archivo.LeerInforme(ruta);
                     int contCantidad = 0; // Inicializar en 0
                     double montoTotal = 0.00;
                     var ruta2 = "Informe.csv";

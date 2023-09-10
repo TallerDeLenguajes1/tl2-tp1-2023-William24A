@@ -1,7 +1,6 @@
 using CadeteriaUtilizar;
 using CadeteUtilizar;
 using PedidoUtilizar;
-using ClienteUtilizar;
 using System.Text;
 using System.Text.Json;
 
@@ -122,7 +121,7 @@ class AccesoCSV: AccesoADatos
         {
             if (!string.IsNullOrWhiteSpace(File.ReadAllText(ruta)))
             {
-                Console.WriteLine("El archivo existe y contiene contenido.");
+                Console.WriteLine("El archivo existe");
                 return true;
             }
             else
@@ -239,7 +238,7 @@ class AccesoJSON: AccesoADatos
         {
             if (!string.IsNullOrWhiteSpace(File.ReadAllText(ruta)))
             {
-                Console.WriteLine("El archivo existe y contiene contenido.");
+                Console.WriteLine("El archivo existe");
                 return true;
             }
             else

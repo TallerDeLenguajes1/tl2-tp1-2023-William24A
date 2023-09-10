@@ -102,7 +102,8 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
         Console.WriteLine("4- Cambiar de estado");
         Console.WriteLine("5- Reasignar pedido");
         Console.WriteLine("6- Cancelar pedido");
-        Console.WriteLine("7- Cargar datos en informe y salir.");
+        Console.WriteLine("7- Eliminar pedido");
+        Console.WriteLine("8- Cargar datos en informe y salir.");
         Console.Write("Ingrese opcion:");
         cont = IngresarEntero();
         switch (cont)
@@ -142,7 +143,6 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                         int telefonoC = IngresarEntero();
 
                         cadeteria.CrearCadeteAgregar(id,nombre,direccionC,telefonoC);
-                        archivo.CargarDatosCadetes(cadeteria, rutaC);
                         Console.Write("Ingrese el ID del pedido a asignar: ");
                         int idp = IngresarEntero();
                         if(cadeteria.AsignarCadeteAPedido(id, idp))
@@ -185,7 +185,6 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     int telefonoCa = IngresarEntero();
 
                     cadeteria.CrearCadeteAgregar(idC,nombreC,direccionCa,telefonoCa);
-                    archivo.CargarDatosCadetes(cadeteria, rutaC);
                     Console.WriteLine("Datos cargados.");
                 break;
             case 4:
@@ -246,9 +245,20 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     Console.WriteLine("No existe pedido cargado. Cargue pedido.");
                 }
                 break;
+            case 8:
+                if(cadeteria.ExisteCadete())
+                {
+                    Console.WriteLine("Ingrese el id del cadete: ");
+                    cadeteria.EliminarCadete(IngresarEntero());
+                }
+                else
+                {
+                    Console.WriteLine("No existen cadetes ingresados. Debe ingresar cadetes.");
+                }
+                break;
             default:
+                    archivo.CargarDatosCadetes(cadeteria, rutaC);
                     Console.WriteLine("Muchas gracias por elegirnos.");
-                    
                     archivo.CargarInforme(cadeteria.RetornarListaEntregados(), rutaI); //corregir, recibe toda la lista de pedidos cuando deberia selecionar los que tiene true en sus estados
                     List<Pedido> pedidosLeer = archivo.LeerInforme(rutaI);
                     int contCantidad = 0; // Inicializar en 0
@@ -279,7 +289,7 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     
                 break;
         }
-    } while (cont != 7);
+    } while (cont != 8);
 }
 
 int IngresarEntero()

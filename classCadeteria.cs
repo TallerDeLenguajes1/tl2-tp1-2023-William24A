@@ -33,9 +33,9 @@ public class Cadeteria
         Listaempleados.Add(cadete);
         return true;
     }
-    public void EliminarCadete(string nombreEmpleado)
+    public void EliminarCadete(int id)
     {
-        Listaempleados.RemoveAll(e => e.Nombre == nombreEmpleado );
+        Listaempleados.RemoveAll(e => e.Id == id );
     }
     public bool CrearPedidoAgregar(int numeroPedido, string? observacion)
     {

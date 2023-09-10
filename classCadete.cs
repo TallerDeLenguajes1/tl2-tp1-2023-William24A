@@ -1,5 +1,3 @@
-using PedidoUtilizar;
-
 namespace CadeteUtilizar;
 public enum EstadoCadete
 {

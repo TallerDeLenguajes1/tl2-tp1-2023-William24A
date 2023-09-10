@@ -2,7 +2,6 @@
 using CadeteriaUtilizar;
 using ArchivosUtilizar;
 using PedidoUtilizar;
-using CadeteUtilizar;
 
 AccesoADatos archivoC = new AccesoCSV();
 AccesoADatos archivoJ = new AccesoJSON();

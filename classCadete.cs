@@ -49,5 +49,8 @@ public class Cadete
             estadoCadete = EstadoCadete.EntregandoEncangue;
         }
     }
-
+    public string Informe()
+    {
+        return $"ID: {id}\nNombre cadete: {nombre}\nDireccion: {direccion}\nTelefono: {telefono}\n";
+    }
 }

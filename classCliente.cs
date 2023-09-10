@@ -29,4 +29,8 @@ public class Cliente
         this.telefono = telefono;
         this.datosreferencia = datosreferencia;
     }
+    public string Informe()
+    {
+        return $"Nombre cliente: {nombreCliente}\nDireccion: {direccion}\nTelefono: {telefono}\nDatos referencia: {datosreferencia}\n";
+    }
 }

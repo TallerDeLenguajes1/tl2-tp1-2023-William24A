@@ -150,5 +150,25 @@ public class Cadeteria
         }
         return false;
     }
+    public string InformePedidos()
+    {
+        string retornar="";
+        foreach (var pedido in listapedidos)
+        {
+            retornar += pedido.Informe();
+            retornar +="\n";
+        }
+        return retornar;
+    }
+    public string InformeCadetes()
+    {
+        string retornar = "";
+        foreach (var cadete in listaempleados)
+        {
+            retornar += cadete.Informe();
+            retornar +="\n";
+        }
+        return retornar;
+    }
 }
 

@@ -54,6 +54,7 @@ do
                 int telefono = IngresarEntero();
                 cadeterias = new Cadeteria(nombre, telefono);
                 archivoC.CargarDatosCadeterias(cadeterias, rutaF);
+                Menu(cadeterias, rutaF,rutaFC, rutaI, archivoC);
             }
             break;
         case 2:
@@ -83,6 +84,7 @@ do
                 int telefono = IngresarEntero();
                 cadeterias = new Cadeteria(nombre, telefono);
                 archivoJ.CargarDatosCadeterias(cadeterias, rutaF);
+                Menu(cadeterias, rutaF,rutaFC, rutaI, archivoJ);
             }
             break;
         default:
@@ -99,11 +101,13 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
         Console.WriteLine("1- Dar alta pedido");
         Console.WriteLine("2- Asignar pedido a cadete");
         Console.WriteLine("3- Ingresar cadete");
-        Console.WriteLine("4- Cambiar de estado");
+        Console.WriteLine("4- Cambiar de estado de pedido");
         Console.WriteLine("5- Reasignar pedido");
         Console.WriteLine("6- Cancelar pedido");
-        Console.WriteLine("7- Eliminar pedido");
-        Console.WriteLine("8- Cargar datos en informe y salir.");
+        Console.WriteLine("7- Eliminar cadete");
+        Console.WriteLine("8- Ver pedidos.");
+        Console.WriteLine("9- Ver cadetes.");
+        Console.WriteLine("10- Cargar datos en informe y salir.");
         Console.Write("Ingrese opcion:");
         cont = IngresarEntero();
         switch (cont)
@@ -245,11 +249,31 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     Console.WriteLine("No existe pedido cargado. Cargue pedido.");
                 }
                 break;
-            case 8:
+            case 7:
                 if(cadeteria.ExisteCadete())
                 {
                     Console.WriteLine("Ingrese el id del cadete: ");
                     cadeteria.EliminarCadete(IngresarEntero());
+                }
+                else
+                {
+                    Console.WriteLine("No existen cadetes ingresados. Debe ingresar cadetes.");
+                }
+                break;
+            case 8:
+                if(cadeteria.ExistePedido())
+                {
+                    Console.WriteLine(cadeteria.InformePedidos());
+                }
+                else
+                {
+                    Console.WriteLine("No existe pedido cargado. Cargue pedido.");
+                }
+                break;
+            case 9:
+                if(cadeteria.ExisteCadete())
+                {
+                    Console.WriteLine(cadeteria.InformeCadetes());
                 }
                 else
                 {
@@ -261,23 +285,17 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     Console.WriteLine("Muchas gracias por elegirnos.");
                     archivo.CargarInforme(cadeteria.RetornarListaEntregados(), rutaI); //corregir, recibe toda la lista de pedidos cuando deberia selecionar los que tiene true en sus estados
                     List<Pedido> pedidosLeer = archivo.LeerInforme(rutaI);
-                    int contCantidad = 0; // Inicializar en 0
-                    double montoTotal = 0.00;
+                    double montoTotal;
                     
+                    montoTotal = 500.00 * pedidosLeer.Count;
 
-                    foreach (var pedidoVer in pedidosLeer)
-                    {
-                        contCantidad++; // Incrementar el contador por cada pedido
-                    }
-
-                    montoTotal = 500.00 * contCantidad;
-                    if(contCantidad != 0 && archivo.ExisteArchivo(rutaI))
+                    if(montoTotal != 0 && archivo.ExisteArchivo(rutaI))
                     {
                         foreach (var cadete in cadeteria.Listaempleados)
                         {
                             int pedidosEntregadosPorCadete = cadeteria.JornalACobrarCantidad(cadete.Id); // Obtener la cantidad de pedidos entregados por el cadete
                             double cantidadPedidos = Convert.ToDouble(pedidosEntregadosPorCadete);
-                            Console.WriteLine($"ID: {cadete.Id}\nNombre: {cadete.Nombre}\nCantidad promedio de pedidos entregados: {cantidadPedidos/contCantidad}\nGanancia: {cantidadPedidos * 500.00}");
+                            Console.WriteLine($"ID: {cadete.Id}\nNombre: {cadete.Nombre}\nCantidad promedio de pedidos entregados: {cantidadPedidos/pedidosLeer.Count}\nGanancia: {cantidadPedidos * 500.00}");
                             
                         }
                     }
@@ -289,7 +307,7 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     
                 break;
         }
-    } while (cont != 8);
+    } while (cont != 10);
 }
 
 int IngresarEntero()

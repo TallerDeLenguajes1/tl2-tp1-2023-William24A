@@ -60,9 +60,9 @@ public class Pedido
         estado = Estado.Cancelado;
         return true;
     }
-    public void EstadoEntregado()
+    public void EstadoEntregado() //Se utiliza en manejo de archivos para Leer datos
     {
-        this.estado = Estado.Entregado; 
+        estado = Estado.Entregado; 
     }
     public void CambiarDatosCadete(int id, string nombre, string direccion, int telefono)
     {
@@ -71,6 +71,11 @@ public class Pedido
     public void CambiarDatosCliente(string nombreCliente, string direccion, int telefono, string datosreferencia)
     {
         this.cliente.CambiarDatos(nombreCliente, direccion,telefono,datosreferencia);
+    }
+
+    public string Informe()
+    {
+        return $"Numero de pedido: {numeroPedido}\nObservacion: {observacion}\n"+cliente.Informe()+cadete.Informe();
     }
 
 }

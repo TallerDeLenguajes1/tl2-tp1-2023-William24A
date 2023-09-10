@@ -48,6 +48,7 @@ public class Pedido
                 break;
             case Estado.Encamino:
                 estado = Estado.Entregado;
+                cadete.CambiarEstado();
                 break;
             default:
                 return false;

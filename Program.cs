@@ -213,7 +213,7 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     var codigoCadete1 = IngresarEntero();
                     Console.WriteLine("Ingresar codigo del pedido: ");
                     var codigoPedido = IngresarEntero();
-                    if(cadeteria.ReasignarPedido(codigoCadete1,codigoPedido))
+                    if(cadeteria.AsignarCadeteAPedido(codigoCadete1,codigoPedido))
                     {
                         Console.WriteLine("Pedido reasignado.");
                     }

@@ -1,3 +1,5 @@
+using PedidoUtilizar;
+
 namespace CadeteUtilizar;
 public enum EstadoCadete
 {
@@ -35,6 +37,17 @@ public class Cadete
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
+    }
+    public void CambiarEstado()
+    {
+        if(estadoCadete == EstadoCadete.EntregandoEncangue)
+        {
+            estadoCadete = EstadoCadete.Libre;
+        }
+        else
+        {
+            estadoCadete = EstadoCadete.EntregandoEncangue;
+        }
     }
 
 }

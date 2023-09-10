@@ -44,24 +44,6 @@ public class Cadeteria
         return true;
     }
     
-    public bool ReasignarPedido(int codigoCadete1, int codigoPedido)
-    {
-        foreach (var pedido in Listapedios)
-        {
-            if(pedido.NumeroPedido == codigoPedido)
-            {
-                foreach (var cadete in Listaempleados)
-                {
-                    if(cadete.Id == codigoCadete1)
-                    {
-                        pedido.CambiarDatosCadete(cadete.Id, cadete.Nombre, cadete.Direccion, cadete.Telefono);
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
     public bool CambiarEstado(int codigoPedido)
     {
         foreach (var pedido in Listapedios)
@@ -96,6 +78,7 @@ public class Cadeteria
                     if(cadete.Id == idcadete)
                     {
                         pedido.CambiarDatosCadete(cadete.Id, cadete.Nombre, cadete.Direccion, cadete.Telefono);
+                        cadete.CambiarEstado();
                         return true;
                     }
                 }

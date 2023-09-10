@@ -113,8 +113,12 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
         switch (cont)
         {
             case 1:
-                Console.Write("Ingrese el numero de pedido: ");
-                int numeroPedido = IngresarEntero();
+                int numeroPedido;
+                do{
+                    Console.Write("Ingrese el numero de pedido: ");
+                    numeroPedido = IngresarEntero();
+                }while(cadeteria.ExisteNumeroPedido(numeroPedido));
+                
                 Console.Write("Ingrese la observacion sobre el pedido: ");
                 string observacion = Console.ReadLine();
                 Console.Write("Ingrese el nombre del cliente: ");
@@ -136,9 +140,14 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     if(!cadeteria.ExisteCadete())
                     {
                         Console.WriteLine("No existen cadetes.");
-                        Console.WriteLine("Ingresar datos del cadete");
-                        Console.Write("ID: ");
-                        var id = IngresarEntero();
+                        int id;
+                        do
+                        {
+                            Console.WriteLine("Ingresar datos del cadete");
+                            Console.Write("ID: ");
+                            id = IngresarEntero();
+                        } while (cadeteria.ExisteIDCadete(id));
+
                         Console.Write("Nombre: ");
                         string nombre = Console.ReadLine();
                         Console.Write("Direccion: ");
@@ -178,9 +187,13 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                 }
                 break;
             case 3:
-                    Console.WriteLine("Ingresar datos del cadete");
-                    Console.Write("ID: ");
-                    var idC = IngresarEntero();
+                    int idC;
+                    do
+                    {
+                        Console.WriteLine("Ingresar datos del cadete");
+                        Console.Write("ID: ");
+                        idC = IngresarEntero();
+                    } while (cadeteria.ExisteIDCadete(idC));
                     Console.Write("Nombre: ");
                     string nombreC = Console.ReadLine();
                     Console.Write("Direccion: ");
@@ -194,8 +207,13 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
             case 4:
                 if(cadeteria.ExistePedido())
                 {
-                    Console.WriteLine("Ingrese el numero del pedido:");
-                    int numero = IngresarEntero();
+                    int numero;
+
+                    do{
+                    Console.Write("Ingrese el numero de pedido: ");
+                    numero = IngresarEntero();
+                    }while(!cadeteria.ExisteNumeroPedido(numero));
+
                     if(cadeteria.CambiarEstado(numero))
                     {
                         Console.WriteLine("Cambios realizados.");
@@ -213,11 +231,20 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
             case 5:
                 if(cadeteria.ExisteCadete() && cadeteria.ExistePedido())
                 {
-                    Console.WriteLine("Ingresar codigo del cadete al que desea asignarle el pedido:");
-                    var codigoCadete1 = IngresarEntero();
-                    Console.WriteLine("Ingresar codigo del pedido: ");
-                    var codigoPedido = IngresarEntero();
-                    if(cadeteria.AsignarCadeteAPedido(codigoCadete1,codigoPedido))
+                    int codigoCadete1;
+                    do
+                    {
+                        Console.WriteLine("Ingresar datos del ID del cadete");
+                        codigoCadete1 = IngresarEntero();
+                    } while (cadeteria.ExisteIDCadete(codigoCadete1));
+
+                    int numero;
+                    do{
+                    Console.Write("Ingrese el numero de pedido: ");
+                    numero = IngresarEntero();
+                    }while(cadeteria.ExisteNumeroPedido(numero));
+                    
+                    if(cadeteria.AsignarCadeteAPedido(codigoCadete1,numero))
                     {
                         Console.WriteLine("Pedido reasignado.");
                     }
@@ -252,8 +279,13 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
             case 7:
                 if(cadeteria.ExisteCadete())
                 {
-                    Console.WriteLine("Ingrese el id del cadete: ");
-                    cadeteria.EliminarCadete(IngresarEntero());
+                    int codigoCadete1;
+                    do
+                    {
+                        Console.WriteLine("Ingresar ID del cadete");
+                        codigoCadete1 = IngresarEntero();
+                    } while (cadeteria.ExisteIDCadete(codigoCadete1));
+                    cadeteria.EliminarCadete(codigoCadete1);
                 }
                 else
                 {
@@ -263,7 +295,12 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
             case 8:
                 if(cadeteria.ExistePedido())
                 {
-                    Console.WriteLine(cadeteria.InformePedidos());
+                    int numero;
+                    do{
+                    Console.Write("Ingrese el numero de pedido: ");
+                    numero = IngresarEntero();
+                    }while(!cadeteria.ExisteNumeroPedido(numero));
+                    Console.WriteLine(cadeteria.InformePedido(numero));
                 }
                 else
                 {
@@ -273,7 +310,13 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
             case 9:
                 if(cadeteria.ExisteCadete())
                 {
-                    Console.WriteLine(cadeteria.InformeCadetes());
+                    int codigoCadete1;
+                    do
+                    {
+                        Console.WriteLine("Ingresar ID del cadete");
+                        codigoCadete1 = IngresarEntero();
+                    } while (!cadeteria.ExisteIDCadete(codigoCadete1));
+                    Console.WriteLine(cadeteria.InformeCadete(codigoCadete1));
                 }
                 else
                 {

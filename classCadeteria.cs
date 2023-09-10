@@ -150,25 +150,56 @@ public class Cadeteria
         }
         return false;
     }
-    public string InformePedidos()
+    public string InformePedido(int idpedido)
     {
         string retornar="";
         foreach (var pedido in listapedidos)
         {
-            retornar += pedido.Informe();
-            retornar +="\n";
+            if(pedido.NumeroPedido == idpedido)
+            {
+                retornar = pedido.Informe();
+                retornar +="\n";
+                return retornar;
+            }
+            
         }
         return retornar;
     }
-    public string InformeCadetes()
+    public string InformeCadete(int idcadete)
     {
         string retornar = "";
         foreach (var cadete in listaempleados)
         {
-            retornar += cadete.Informe();
-            retornar +="\n";
+            if(cadete.Id == idcadete)
+            {
+                retornar = cadete.Informe();
+                retornar +="\n";
+            }
+            
         }
         return retornar;
+    }
+    public bool ExisteNumeroPedido(int idpedido)
+    {
+        foreach (var pedido in listapedidos)
+        {
+            if(pedido.NumeroPedido == idpedido)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool ExisteIDCadete(int idcadete)
+    {
+        foreach (var cadete in listaempleados)
+        {
+            if(cadete.Id == idcadete)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

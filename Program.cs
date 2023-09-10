@@ -54,7 +54,7 @@ do
         case 2:
             rutaF = rutaJson;
             rutaFC = rutaJson1;
-            rutaI = rutaIC;
+            rutaI = rutaiJ;
             if(archivoJ.ExisteArchivo(rutaF))
             {
                 Console.WriteLine("Existe");

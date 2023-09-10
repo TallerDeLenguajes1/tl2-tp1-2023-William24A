@@ -181,6 +181,7 @@ class AccesoCSV: AccesoADatos
                 
                 foreach (var pedido in listaPedidos)
                 {
+                    
                     var data = $"{pedido.NumeroPedido},{pedido.Observacion},{pedido.Cliente.NombreCliente},{pedido.Cliente.Direccion},{pedido.Cliente.Telefono},{pedido.Cliente.Datosreferencia},{pedido.Estado},{pedido.Cadete.Id},{pedido.Cadete.Nombre},{pedido.Cadete.Direccion},{pedido.Cadete.Telefono}\n";   
                     byte[] bytes = Encoding.UTF8.GetBytes(data);
                     fs.Write(bytes, 0, bytes.Length);

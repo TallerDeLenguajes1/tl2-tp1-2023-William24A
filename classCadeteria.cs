@@ -137,5 +137,18 @@ public class Cadeteria
         }
         return 0;
     }
+
+    public List<Pedido> RetornarListaEntregados()
+    {
+        List<Pedido> listaNueva = new List<Pedido>();
+        foreach (var pedido in listapedidos)
+        {
+            if(pedido.Estado == Estado.Entregado)
+            {
+                listaNueva.Add(pedido);
+            }
+        }
+        return listaNueva;
+    }
 }
 

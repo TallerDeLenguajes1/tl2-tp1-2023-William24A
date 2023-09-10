@@ -185,7 +185,7 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
             default:
                     Console.WriteLine("Muchas gracias por elegirnos.");
                     
-                    archivo.CargarInforme(cadeteria.Listapedios, rutaI); //corregir, recibe toda la lista de pedidos cuando deberia selecionar los que tiene true en sus estados
+                    archivo.CargarInforme(cadeteria.RetornarListaEntregados(), rutaI); //corregir, recibe toda la lista de pedidos cuando deberia selecionar los que tiene true en sus estados
                     List<Pedido> pedidosLeer = archivo.LeerInforme(rutaI);
                     int contCantidad = 0; // Inicializar en 0
                     double montoTotal = 0.00;

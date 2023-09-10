@@ -48,7 +48,12 @@ do
             }
             else
             {
-                Console.WriteLine("Ingrese cadeteria");
+                Console.Write("Ingrese nombre de cadeteria: ");
+                string nombre = Console.ReadLine();
+                Console.Write("Ingrese telefono de cadeteria: ");
+                int telefono = IngresarEntero();
+                cadeterias = new Cadeteria(nombre, telefono);
+                archivoC.CargarDatosCadeterias(cadeterias, rutaF);
             }
             break;
         case 2:
@@ -72,9 +77,12 @@ do
             }
             else
             {
-                Console.WriteLine("Ingrese cadeteria");
-                Cadeteria cadeteria = new Cadeteria("Los panchos", 123456);
-                archivoJ.CargarDatosCadeterias(cadeteria, rutaF);
+                Console.Write("Ingrese nombre de cadeteria: ");
+                string nombre = Console.ReadLine();
+                Console.Write("Ingrese telefono de cadeteria: ");
+                int telefono = IngresarEntero();
+                cadeterias = new Cadeteria(nombre, telefono);
+                archivoJ.CargarDatosCadeterias(cadeterias, rutaF);
             }
             break;
         default:
@@ -90,9 +98,11 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
         Console.WriteLine("Bienvenido al sistema");
         Console.WriteLine("1- Dar alta pedido");
         Console.WriteLine("2- Asignar pedido a cadete");
-        Console.WriteLine("3- Cambiar de estado");
-        Console.WriteLine("4- Reasignar pedido");
-        Console.WriteLine("5- Cargar datos en informe y salir.");
+        Console.WriteLine("3- Ingresar cadete");
+        Console.WriteLine("4- Cambiar de estado");
+        Console.WriteLine("5- Reasignar pedido");
+        Console.WriteLine("6- Cancelar pedido");
+        Console.WriteLine("7- Cargar datos en informe y salir.");
         Console.Write("Ingrese opcion:");
         cont = IngresarEntero();
         switch (cont)
@@ -116,70 +126,124 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                 Console.WriteLine("Pedido fue creado.");
                 break;
             case 2:
-                if(cadeteria.Listaempleados.Count == 0)
+                if(cadeteria.ExistePedido())
                 {
-                    Console.WriteLine("No existen cadetes.");
-                    Console.WriteLine("Ingresar datos del cadete");
-                    Console.Write("ID: ");
-                    var id = IngresarEntero();
-                    Console.Write("Nombre: ");
-                    string nombre = Console.ReadLine();
-                    Console.Write("Direccion: ");
-                    string direccionC = Console.ReadLine();
-                    Console.Write("Telefono: ");
-                    int telefonoC = IngresarEntero();
-
-                    cadeteria.CrearCadeteAgregar(id,nombre,direccionC,telefonoC);
-                    archivo.CargarDatosCadetes(cadeteria, rutaC);
-                    Console.Write("Ingrese el ID del pedido a asignar: ");
-                    int idp = IngresarEntero();
-                    if(cadeteria.AsignarCadeteAPedido(id, idp))
+                    if(!cadeteria.ExisteCadete())
                     {
-                        Console.WriteLine("Pedido asignado");
+                        Console.WriteLine("No existen cadetes.");
+                        Console.WriteLine("Ingresar datos del cadete");
+                        Console.Write("ID: ");
+                        var id = IngresarEntero();
+                        Console.Write("Nombre: ");
+                        string nombre = Console.ReadLine();
+                        Console.Write("Direccion: ");
+                        string direccionC = Console.ReadLine();
+                        Console.Write("Telefono: ");
+                        int telefonoC = IngresarEntero();
+
+                        cadeteria.CrearCadeteAgregar(id,nombre,direccionC,telefonoC);
+                        archivo.CargarDatosCadetes(cadeteria, rutaC);
+                        Console.Write("Ingrese el ID del pedido a asignar: ");
+                        int idp = IngresarEntero();
+                        if(cadeteria.AsignarCadeteAPedido(id, idp))
+                        {
+                            Console.WriteLine("Pedido asignado");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Pedido no asignado, revisar id del pedido.");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Pedido no asignado, revisar id del pedido.");
+                        Console.Write("Ingrese el ID del pedido a asignar: ");
+                        int idp = IngresarEntero();
+                        if(cadeteria.AsignarCadeteAPedido(cadeteria.EncontrarCadeteLibere(), idp))
+                        {
+                            Console.WriteLine("Pedido asignado");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Pedido no asignado, revisar id del pedido.");
+                        }
                     }
                 }
                 else
                 {
-                    Console.Write("Ingrese el ID del pedido a asignar: ");
-                    int idp = IngresarEntero();
-                    if(cadeteria.AsignarCadeteAPedido(cadeteria.EncontrarCadeteLibere(), idp))
-                    {
-                        Console.WriteLine("Pedido asignado");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Pedido no asignado, revisar id del pedido.");
-                    }
+                    Console.WriteLine("No existen pedidos. Ingrese alguno.");
                 }
                 break;
             case 3:
-                Console.WriteLine("Ingrese el numero del pedido:");
-                int numero = IngresarEntero();
-                if(cadeteria.CambiarEstado(numero))
-                {
-                    Console.WriteLine("Cambios realizados.");
-                }
-                else
-                {
-                    Console.WriteLine("No se realizo cambios.");
-                }
+                    Console.WriteLine("Ingresar datos del cadete");
+                    Console.Write("ID: ");
+                    var idC = IngresarEntero();
+                    Console.Write("Nombre: ");
+                    string nombreC = Console.ReadLine();
+                    Console.Write("Direccion: ");
+                    string direccionCa = Console.ReadLine();
+                    Console.Write("Telefono: ");
+                    int telefonoCa = IngresarEntero();
+
+                    cadeteria.CrearCadeteAgregar(idC,nombreC,direccionCa,telefonoCa);
+                    archivo.CargarDatosCadetes(cadeteria, rutaC);
+                    Console.WriteLine("Datos cargados.");
                 break;
             case 4:
-                Console.WriteLine("Ingresar codigo del cadete al que desea asignarle el pedido:");
-                var codigoCadete1 = IngresarEntero();
-                Console.WriteLine("Ingresar codigo del pedido: ");
-                var codigoPedido = IngresarEntero();
-                if(cadeteria.ReasignarPedido(codigoCadete1,codigoPedido))
+                if(cadeteria.ExistePedido())
                 {
-                    Console.WriteLine("Pedido reasignado.");
+                    Console.WriteLine("Ingrese el numero del pedido:");
+                    int numero = IngresarEntero();
+                    if(cadeteria.CambiarEstado(numero))
+                    {
+                        Console.WriteLine("Cambios realizados.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No se realizo cambios.");
+                    }
+                }
+                else 
+                {
+                    Console.WriteLine("No existen pedidos. Ingrese alguno.");
+                }   
+                break;
+            case 5:
+                if(cadeteria.ExisteCadete() && cadeteria.ExistePedido())
+                {
+                    Console.WriteLine("Ingresar codigo del cadete al que desea asignarle el pedido:");
+                    var codigoCadete1 = IngresarEntero();
+                    Console.WriteLine("Ingresar codigo del pedido: ");
+                    var codigoPedido = IngresarEntero();
+                    if(cadeteria.ReasignarPedido(codigoCadete1,codigoPedido))
+                    {
+                        Console.WriteLine("Pedido reasignado.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("El pedido no se pudo reasignar.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("El pedido no se pudo reasignar.");
+                    Console.WriteLine("No existe o pedido o cadetes. Ingrese alguno");
+                }
+                break;
+            case 6:
+                if(cadeteria.ExistePedido())
+                {
+                    Console.WriteLine("Ingrese codigo de pedido: ");
+                    if(cadeteria.CancelarPedido(IngresarEntero()))
+                    {
+                        Console.WriteLine("Pedido cancelado.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("El pedido no existe.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No existe pedido cargado. Cargue pedido.");
                 }
                 break;
             default:
@@ -215,7 +279,7 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                     
                 break;
         }
-    } while (cont != 5);
+    } while (cont != 7);
 }
 
 int IngresarEntero()

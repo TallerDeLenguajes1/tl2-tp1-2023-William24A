@@ -103,17 +103,6 @@ public class Cadeteria
         }
         return false;
     }
-    public Pedido BuscarPedido(int id)
-    {
-        foreach (var pedido in Listapedios)
-        {
-            if(pedido.NumeroPedido == id)
-            {
-                return pedido;
-            }
-        }
-        return null;
-    }
     public bool AsignarClienteAPedido(int idpedido,string nombreCliente, string direccion, int telefono, string datosreferencia)
     {
         foreach (var pedido in Listapedios)
@@ -149,6 +138,34 @@ public class Cadeteria
             }
         }
         return listaNueva;
+    }
+    public bool ExisteCadete()
+    {
+        if(listaempleados.Count > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool ExistePedido()
+    {
+        if(listapedidos.Count > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool CancelarPedido(int numeroPedido)
+    {
+        foreach (var pedido in listapedidos)
+        {
+            if(pedido.NumeroPedido == numeroPedido)
+            {
+                pedido.CancelarPedido();
+                return true;
+            }
+        }
+        return false;
     }
 }
 

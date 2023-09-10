@@ -11,8 +11,11 @@ string ruta = "DatosCadeterias.csv";
 string ruta1 = "DatosCadetes.csv";
 string rutaJson = "DatosCadeterias.Json";
 string rutaJson1 = "DatosCadetes.Json";
+string rutaIC ="Informe.csv";
+string rutaiJ ="Informe.Json";
 string rutaF ="";
 string rutaFC ="";
+string rutaI ="";
 var cadeterias = new Cadeteria();
 var op = 0;
 do
@@ -27,6 +30,7 @@ do
         case 1:
             rutaF = ruta;
             rutaFC = ruta1;
+            rutaI = rutaIC;
             if(archivoC.ExisteArchivo(rutaF))
             {
                 Console.WriteLine("Existe");
@@ -40,7 +44,7 @@ do
                 {
                     Console.WriteLine("No hay cadetes trabajando debe agregar");
                 }
-                Menu(cadeterias, rutaF,rutaFC, archivoC);
+                Menu(cadeterias, rutaF,rutaFC, rutaI, archivoC);
             }
             else
             {
@@ -50,6 +54,7 @@ do
         case 2:
             rutaF = rutaJson;
             rutaFC = rutaJson1;
+            rutaI = rutaIC;
             if(archivoJ.ExisteArchivo(rutaF))
             {
                 Console.WriteLine("Existe");
@@ -63,7 +68,7 @@ do
                 {
                     Console.WriteLine("No hay cadetes trabajando debe agregar");
                 }
-                Menu(cadeterias, rutaF,rutaFC, archivoJ);
+                Menu(cadeterias, rutaF,rutaFC, rutaI, archivoJ);
             }
             else
             {
@@ -77,7 +82,7 @@ do
     }
 } while (op != 1 && op != 2);
 
-void Menu(Cadeteria cadeteria, string ruta, string rutaC, AccesoADatos archivo)
+void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoADatos archivo)
 {
     int cont;
     do
@@ -181,12 +186,12 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, AccesoADatos archivo)
                 break;
             default:
                     Console.WriteLine("Muchas gracias por elegirnos.");
-                    string rutaIn = "Informe.Json";
-                    archivo.CargarInforme(cadeteria.Listapedios, rutaIn);
-                    List<Pedido> pedidosLeer = archivo.LeerInforme(rutaIn);
+                    
+                    archivo.CargarInforme(cadeteria.Listapedios, rutaI); //corregir, recibe toda la lista de pedidos cuando deberia selecionar los que tiene true en sus estados
+                    List<Pedido> pedidosLeer = archivo.LeerInforme(rutaI);
                     int contCantidad = 0; // Inicializar en 0
                     double montoTotal = 0.00;
-                    var ruta2 = "Informe.csv";
+                    
 
                     foreach (var pedidoVer in pedidosLeer)
                     {
@@ -194,7 +199,7 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, AccesoADatos archivo)
                     }
 
                     montoTotal = 500.00 * contCantidad;
-                    if(contCantidad != 0 && archivo.ExisteArchivo(ruta2))
+                    if(contCantidad != 0 && archivo.ExisteArchivo(rutaI))
                     {
                         foreach (var cadete in cadeteria.Listaempleados)
                         {

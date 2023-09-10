@@ -201,9 +201,5 @@ public class Cadeteria
         }
         return false;
     }
-    public void AsignarListaCadetes(List<Cadete> listacadetes)
-    {
-        listaempleados = listacadetes;
-    }
 }
 

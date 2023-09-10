@@ -207,9 +207,10 @@ class AccesoJSON: AccesoADatos
     {
         string pathJSON = Directory.GetCurrentDirectory()+"\\"+ruta;
         string Json = File.ReadAllText(pathJSON); //Leer archivo y guardar
-
-        cadeteria.AsignarListaCadetes(JsonSerializer.Deserialize<List<Cadete>>(Json)); // aclaracion de lista
-            
+        foreach(var cadete in JsonSerializer.Deserialize<List<Cadete>>(Json)) // aclaracion de lista
+        {
+            cadeteria.CrearCadeteAgregar(cadete.Id,cadete.Nombre, cadete.Direccion, cadete.Telefono);
+        } 
         return cadeteria;
     }
     public override void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)

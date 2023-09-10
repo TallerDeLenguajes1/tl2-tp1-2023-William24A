@@ -158,8 +158,8 @@ class AccesoCSV: AccesoADatos
                     // Crea una instancia de Cliente y asigna sus propiedades
                     pedido.CambiarDatosCliente(dato[2],dato[3],int.Parse(dato[4]),dato[5]);
                     pedido.CambiarDatosCadete(int.Parse(dato[7]),dato[8],dato[9],int.Parse(dato[10]));
-                    pedido.CambiarEstado(bool.Parse(dato[6]));
-                    
+                    pedido.EstadoEntregado();
+
                     listaPedido.Add(pedido);
                 }
             }

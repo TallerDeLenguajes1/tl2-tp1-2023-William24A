@@ -68,7 +68,7 @@ public class Cadeteria
         {
             if(pedido.NumeroPedido == codigoPedido)
             {
-                return pedido.CambiarEstado(true);
+                return pedido.CambiarEstado();
             }
         }
         return false;
@@ -125,6 +125,17 @@ public class Cadeteria
             }
         }
         return false;
+    }
+    public int EncontrarCadeteLibere()
+    {
+        foreach (var cadete in Listaempleados)
+        {
+            if(cadete.EstadoCadete == EstadoCadete.Libre)
+            {
+                return cadete.Id;
+            }
+        }
+        return 0;
     }
 }
 

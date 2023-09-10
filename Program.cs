@@ -144,11 +144,9 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                 }
                 else
                 {
-                    var rand= new Random();
-                    int idC = rand.Next(1,cadeteria.Listaempleados.Count);
                     Console.Write("Ingrese el ID del pedido a asignar: ");
                     int idp = IngresarEntero();
-                    if(cadeteria.AsignarCadeteAPedido(idC, idp))
+                    if(cadeteria.AsignarCadeteAPedido(cadeteria.EncontrarCadeteLibere(), idp))
                     {
                         Console.WriteLine("Pedido asignado");
                     }

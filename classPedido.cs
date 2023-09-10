@@ -2,18 +2,25 @@ namespace PedidoUtilizar;
 
 using CadeteUtilizar;
 using ClienteUtilizar;
+public enum Estado
+{
+    Encargado,
+    Encamino,
+    Entregado,
+    Cancelado
+}
 public class Pedido
 {
     private int numeroPedido;
     private string? observacion;
     private Cliente cliente;
-    private bool estado;
+    private Estado estado;
     private Cadete cadete;
 
     public int NumeroPedido { get => numeroPedido; }
     public string? Observacion { get => observacion; }
     public Cliente Cliente { get => cliente; }
-    public bool Estado { get => estado; }
+    public Estado Estado { get => estado; }
     public Cadete Cadete { get => cadete;}
     public Pedido()
     {
@@ -25,17 +32,36 @@ public class Pedido
         this.numeroPedido = numeroPedido;
         this.observacion = observacion;
         this.cliente = new Cliente();
-        this.estado = false;
+        this.estado = Estado.Encargado;
         this.cadete = new Cadete();
     }
-    public bool VerEstado()
+    public Estado VerEstado()
     {
         return Estado;
     }
-    public bool CambiarEstado(bool estado)
+    public bool CambiarEstado()
     {
-        this.estado = estado;
+        switch(estado)
+        {
+            case Estado.Encargado:
+                estado = Estado.Encamino;
+                break;
+            case Estado.Encamino:
+                estado = Estado.Entregado;
+                break;
+            default:
+                return false;
+        }
         return true;
+    }
+    public bool CancelarPedido()
+    {
+        estado = Estado.Cancelado;
+        return true;
+    }
+    public void EstadoEntregado()
+    {
+        this.estado = Estado.Entregado; 
     }
     public void CambiarDatosCadete(int id, string nombre, string direccion, int telefono)
     {

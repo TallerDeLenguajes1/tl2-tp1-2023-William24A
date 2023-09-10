@@ -1,5 +1,5 @@
 namespace ClienteUtilizar;
-class Cliente
+public class Cliente
 {
     private string nombreCliente;
     private string direccion;
@@ -21,13 +21,5 @@ class Cliente
         this.Direccion = direccion;
         this.Telefono = telefono;
         this.Datosreferencia = datosreferencia;
-    }
-    public void getDireccion()
-    {
-        Console.WriteLine($"Direccion: {Direccion} \nReferencia: {Datosreferencia}");
-    }
-    public void getDatos()
-    {
-        Console.WriteLine($"Nombre: {NombreCliente}\nTelefono: {Telefono}");
     }
 }

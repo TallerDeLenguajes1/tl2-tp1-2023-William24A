@@ -30,7 +30,7 @@ public abstract class AccesoADatos
     {
         return null;
     }
-    public virtual void CargarInforme(Pedido pedido, string ruta)
+    public virtual void CargarInforme(List<Pedido> listaPedidos, string ruta)
     {
     }
 }
@@ -178,16 +178,19 @@ class AccesoCSV: AccesoADatos
         return listaPedido;
     }
 }
-    public override void CargarInforme(Pedido pedido, string ruta)
+    public override void CargarInforme(List<Pedido> listaPedidos, string ruta)
     {
         try
         {
             using (FileStream fs = new FileStream(ruta, FileMode.Append, FileAccess.Write))
             {
                 
+                foreach (var pedido in listaPedidos)
+                {
                     var data = $"{pedido.NumeroPedido},{pedido.Observacion},{pedido.Cliente.NombreCliente},{pedido.Cliente.Direccion},{pedido.Cliente.Telefono},{pedido.Cliente.Datosreferencia},{pedido.Estado},{pedido.Cadete.Id},{pedido.Cadete.Nombre},{pedido.Cadete.Direccion},{pedido.Cadete.Telefono}\n";   
                     byte[] bytes = Encoding.UTF8.GetBytes(data);
                     fs.Write(bytes, 0, bytes.Length);
+                }
             }
         }
         catch (Exception ex)
@@ -202,7 +205,7 @@ class AccesoJSON: AccesoADatos
     {
         Cadeteria cadeteria = null;
 
-        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+        string pathJSON = Directory.GetCurrentDirectory()+"\\"+ruta;
         string Json = File.ReadAllText(pathJSON);
         cadeteria = JsonSerializer.Deserialize<Cadeteria>(Json);
 
@@ -210,7 +213,7 @@ class AccesoJSON: AccesoADatos
     }
     public override Cadeteria LeerDatosCadetes(Cadeteria cadeteria, string ruta)
     {
-        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+        string pathJSON = Directory.GetCurrentDirectory()+"\\"+ruta;
         string Json = File.ReadAllText(pathJSON); //Leer archivo y guardar
 
         cadeteria.Listaempleados = JsonSerializer.Deserialize<List<Cadete>>(Json); // aclaracion de lista
@@ -220,7 +223,7 @@ class AccesoJSON: AccesoADatos
     public override void CargarDatosCadeterias(Cadeteria cadeteria, string ruta)
     {
         string Json = JsonSerializer.Serialize<Cadeteria>(cadeteria);
-        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+        string pathJSON = Directory.GetCurrentDirectory()+"\\"+ruta;
             using(StreamWriter sw = new StreamWriter(pathJSON, false)){
                 sw.Write(Json);
                 sw.Close();
@@ -229,7 +232,7 @@ class AccesoJSON: AccesoADatos
     public override void CargarDatosCadetes(Cadeteria cadeteria, string ruta)
     {
         string Json = JsonSerializer.Serialize<List<Cadete>>(cadeteria.Listaempleados);
-        string pathJSON = Directory.GetCurrentDirectory()+ruta;
+        string pathJSON = Directory.GetCurrentDirectory()+"\\"+ruta;
             using(StreamWriter sw = new StreamWriter(pathJSON, false)){
                 sw.Write(Json);
                 sw.Close();
@@ -259,20 +262,46 @@ class AccesoJSON: AccesoADatos
     public override List<Pedido> LeerInforme(string ruta)
     {
         List<Pedido> listaPedidos = new List<Pedido>();
-        string pathJSON = Directory.GetCurrentDirectory()+ruta;
-        string Json = File.ReadAllText(pathJSON); //Leer archivo y guardar
 
-        listaPedidos = JsonSerializer.Deserialize<List<Pedido>>(Json); // aclaracion de lista
-    
+        try
+        {
+            string Json = File.ReadAllText(ruta); // Lee el archivo JSON directamente desde la ruta proporcionada
+            listaPedidos = JsonSerializer.Deserialize<List<Pedido>>(Json);
+        }
+        catch (FileNotFoundException ex)
+        {
+            // Manejar la excepción si el archivo no se encuentra
+            Console.WriteLine("Archivo no encontrado: " + ex.Message);
+        }
+        catch (JsonException ex)
+        {
+            // Manejar la excepción si hay un error en la deserialización JSON
+            Console.WriteLine("Error en deserialización JSON: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            // Manejar cualquier otra excepción
+            Console.WriteLine("Error: " + ex.Message);
+        }
+
         return listaPedidos;
     }
-    public override void CargarInforme(Pedido pedido, string ruta)
+   public override void CargarInforme(List<Pedido> listaPedidos, string ruta)
     {
-        string Json = JsonSerializer.Serialize<Pedido>(pedido);
-        string pathJSON = Directory.GetCurrentDirectory()+ruta;
-            using(StreamWriter sw = new StreamWriter(pathJSON, false)){
-                sw.Write(Json);
-                sw.Close();
-            }
+        try
+        {
+            string Json = JsonSerializer.Serialize(listaPedidos);
+            File.WriteAllText(ruta, Json); // Escribe el JSON directamente en el archivo en la ruta proporcionada
+        }
+        catch (JsonException ex)
+        {
+            // Manejar la excepción si hay un error en la serialización JSON
+            Console.WriteLine("Error en serialización JSON: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            // Manejar cualquier otra excepción
+            Console.WriteLine("Error: " + ex.Message);
+        }
     }
 }

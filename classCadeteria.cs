@@ -37,9 +37,9 @@ public class Cadeteria
     {
         Listaempleados.RemoveAll(e => e.Nombre == nombreEmpleado );
     }
-    public bool CrearPedidoAgregar(int numeroPedido, string? observacion,string nombreCliente, string direccion, int telefono, string datosreferencia)
+    public bool CrearPedidoAgregar(int numeroPedido, string? observacion)
     {
-        Pedido pedido = new Pedido(numeroPedido, observacion, nombreCliente, direccion, telefono, datosreferencia);
+        Pedido pedido = new Pedido(numeroPedido, observacion);
         Listapedios.Add(pedido);
         return true;
     }
@@ -109,6 +109,31 @@ public class Cadeteria
         }
         return false;
     }
+    public Pedido BuscarPedido(int id)
+    {
+        foreach (var pedido in Listapedios)
+        {
+            if(pedido.NumeroPedido == id)
+            {
+                return pedido;
+            }
+        }
+        return null;
+    }
+    public bool AsignarClienteAPedido(int idpedido,string nombreCliente, string direccion, int telefono, string datosreferencia)
+    {
+        foreach (var pedido in Listapedios)
+        {
+            if(pedido.NumeroPedido == idpedido)
+            {
+                pedido.Cliente.NombreCliente = nombreCliente;
+                pedido.Cliente.Direccion = direccion;
+                pedido.Cliente.Telefono = telefono;
+                pedido.Cliente.Datosreferencia = datosreferencia;
+                return true;
+            }
+        }
+        return false;
+    }
 }
-
 

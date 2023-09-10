@@ -46,9 +46,7 @@ class AccesoCSV: AccesoADatos
                 {
                     string line = reader.ReadLine();
                     string[] dato = line.Split(',');
-
-                    cadeteria.Nombre = dato[0];
-                    cadeteria.Telefono = int.Parse(dato[1]);
+                    cadeteria = new Cadeteria(dato[0], int.Parse(dato[1]));
                 }
             }  
             return cadeteria;          
@@ -210,7 +208,7 @@ class AccesoJSON: AccesoADatos
         string pathJSON = Directory.GetCurrentDirectory()+"\\"+ruta;
         string Json = File.ReadAllText(pathJSON); //Leer archivo y guardar
 
-        cadeteria.Listaempleados = JsonSerializer.Deserialize<List<Cadete>>(Json); // aclaracion de lista
+        cadeteria.AsignarListaCadetes(JsonSerializer.Deserialize<List<Cadete>>(Json)); // aclaracion de lista
             
         return cadeteria;
     }

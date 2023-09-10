@@ -11,20 +11,20 @@ public class Cadeteria
 
     public Cadeteria()
     {
-        Listaempleados = new List<Cadete>();
+        listaempleados = new List<Cadete>();
         listapedidos = new List<Pedido>();
     }
     public Cadeteria(string nombre, int telefono)
     {
-        this.Nombre = nombre;
-        this.Telefono= telefono;
-        Listaempleados = new List<Cadete>();
+        this.nombre = nombre;
+        this.telefono= telefono;
+        listaempleados = new List<Cadete>();
         listapedidos = new List<Pedido>();
     }
 
-    public string Nombre { get => nombre; set => nombre = value; }
-    public int Telefono { get => telefono; set => telefono = value; }
-    internal List<Cadete> Listaempleados { get => listaempleados; set => listaempleados = value; }
+    public string Nombre { get => nombre; }
+    public int Telefono { get => telefono; }
+    internal List<Cadete> Listaempleados { get => listaempleados; }
     internal List<Pedido> Listapedios {get => listapedidos;}
 
     public bool CrearCadeteAgregar(int id, string nombre, string direccion, int telefono)
@@ -200,6 +200,10 @@ public class Cadeteria
             }
         }
         return false;
+    }
+    public void AsignarListaCadetes(List<Cadete> listacadetes)
+    {
+        listaempleados = listacadetes;
     }
 }
 

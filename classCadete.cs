@@ -8,10 +8,10 @@ public class Cadete
     private int telefono;
     
 
-    public int Id { get => id; set => id = value; }
-    public string Nombre { get => nombre; set => nombre = value; }
-    public string Direccion { get => direccion; set => direccion = value; }
-    public int Telefono { get => telefono; set => telefono = value; }
+    public int Id { get => id; }
+    public string Nombre { get => nombre; }
+    public string Direccion { get => direccion; }
+    public int Telefono { get => telefono; }
    
     public Cadete()
     {
@@ -19,11 +19,19 @@ public class Cadete
 
     public Cadete(int id, string nombre, string direccion, int telefono)
     {
-        Id = id;
-        Nombre = nombre;
-        Direccion = direccion;
-        Telefono = telefono;
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
         
     }
+     public void CambiarDatos(int id, string nombre, string direccion, int telefono)
+    {
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+    }
+
 
 }

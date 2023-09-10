@@ -54,10 +54,7 @@ public class Cadeteria
                 {
                     if(cadete.Id == codigoCadete1)
                     {
-                        pedido.Cadete.Id = cadete.Id;
-                        pedido.Cadete.Nombre = cadete.Nombre;
-                        pedido.Cadete.Direccion = cadete.Direccion;
-                        pedido.Cadete.Telefono = cadete.Telefono;
+                        pedido.CambiarDatosCadete(cadete.Id, cadete.Nombre, cadete.Direccion, cadete.Telefono);
                         return true;
                     }
                 }
@@ -71,7 +68,7 @@ public class Cadeteria
         {
             if(pedido.NumeroPedido == codigoPedido)
             {
-                return pedido.CambiarEstado();
+                return pedido.CambiarEstado(true);
             }
         }
         return false;
@@ -98,10 +95,7 @@ public class Cadeteria
                 {
                     if(cadete.Id == idcadete)
                     {
-                        pedido.Cadete.Id = cadete.Id;
-                        pedido.Cadete.Nombre = cadete.Nombre;
-                        pedido.Cadete.Direccion = cadete.Direccion;
-                        pedido.Cadete.Telefono = cadete.Telefono;
+                        pedido.CambiarDatosCadete(cadete.Id, cadete.Nombre, cadete.Direccion, cadete.Telefono);
                         return true;
                     }
                 }
@@ -126,10 +120,7 @@ public class Cadeteria
         {
             if(pedido.NumeroPedido == idpedido)
             {
-                pedido.Cliente.NombreCliente = nombreCliente;
-                pedido.Cliente.Direccion = direccion;
-                pedido.Cliente.Telefono = telefono;
-                pedido.Cliente.Datosreferencia = datosreferencia;
+                pedido.CambiarDatosCliente(nombreCliente,direccion,telefono,datosreferencia);
                 return true;
             }
         }

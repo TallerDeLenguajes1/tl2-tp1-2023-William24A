@@ -10,10 +10,10 @@ public class Pedido
     private bool estado;
     private Cadete cadete;
 
-    public int NumeroPedido { get => numeroPedido; set => numeroPedido = value; }
-    public string? Observacion { get => observacion; set => observacion = value; }
-    public Cliente Cliente { get => cliente; set => cliente = value; }
-    public bool Estado { get => estado; set => estado = value; }
+    public int NumeroPedido { get => numeroPedido; }
+    public string? Observacion { get => observacion; }
+    public Cliente Cliente { get => cliente; }
+    public bool Estado { get => estado; }
     public Cadete Cadete { get => cadete;}
     public Pedido()
     {
@@ -22,8 +22,8 @@ public class Pedido
     }
     public Pedido(int numeroPedido, string? observacion)
     {
-        this.NumeroPedido = numeroPedido;
-        this.Observacion = observacion;
+        this.numeroPedido = numeroPedido;
+        this.observacion = observacion;
         this.cliente = new Cliente();
         this.estado = false;
         this.cadete = new Cadete();
@@ -32,10 +32,18 @@ public class Pedido
     {
         return Estado;
     }
-    public bool CambiarEstado()
+    public bool CambiarEstado(bool estado)
     {
-        this.Estado = true;
+        this.estado = estado;
         return true;
+    }
+    public void CambiarDatosCadete(int id, string nombre, string direccion, int telefono)
+    {
+        this.cadete.CambiarDatos(id,nombre,direccion,telefono);
+    }
+    public void CambiarDatosCliente(string nombreCliente, string direccion, int telefono, string datosreferencia)
+    {
+        this.cliente.CambiarDatos(nombreCliente, direccion,telefono,datosreferencia);
     }
 
 }

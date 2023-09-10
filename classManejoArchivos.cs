@@ -153,19 +153,13 @@ class AccesoCSV: AccesoADatos
                 
                 if (dato.Length >= 9) // Asegura que hay suficientes campos en la línea
                 {
-                    Pedido pedido = new Pedido();
-                    pedido.NumeroPedido = int.Parse(dato[0]);
-                    pedido.Observacion = dato[1];
+                    Pedido pedido = new Pedido(int.Parse(dato[0]),dato[1]);
                     
                     // Crea una instancia de Cliente y asigna sus propiedades
-                    pedido.Cliente = new Cliente(dato[2],dato[3],int.Parse(dato[4]),dato[5]);
+                    pedido.CambiarDatosCliente(dato[2],dato[3],int.Parse(dato[4]),dato[5]);
+                    pedido.CambiarDatosCadete(int.Parse(dato[7]),dato[8],dato[9],int.Parse(dato[10]));
+                    pedido.CambiarEstado(bool.Parse(dato[6]));
                     
-                    pedido.Estado = bool.Parse(dato[6]);
-                    pedido.Cadete.Id = int.Parse(dato[7]);
-                    pedido.Cadete.Nombre = dato[8];
-                    pedido.Cadete.Direccion = dato[9];
-                    pedido.Cadete.Telefono = int.Parse(dato[10]); 
-
                     listaPedido.Add(pedido);
                 }
             }

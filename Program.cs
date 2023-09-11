@@ -323,29 +323,37 @@ void Menu(Cadeteria cadeteria, string ruta, string rutaC, string rutaI, AccesoAD
                 }
                 break;
             default:
-                    archivo.CargarDatosCadetes(cadeteria, rutaC);
+                                            
                     Console.WriteLine("Muchas gracias por elegirnos.");
-                    archivo.CargarInforme(cadeteria.RetornarListaEntregados(), rutaI); //corregir, recibe toda la lista de pedidos cuando deberia selecionar los que tiene true en sus estados
-                    List<Pedido> pedidosLeer = archivo.LeerInforme(rutaI);
-                    double montoTotal;
-                    
-                    montoTotal = 500.00 * pedidosLeer.Count;
-
-                    if(montoTotal != 0 && archivo.ExisteArchivo(rutaI))
+                    if(archivo.ExisteArchivo(rutaC))
                     {
-                        foreach (var cadete in cadeteria.Listaempleados)
+                        archivo.CargarDatosCadetes(cadeteria, rutaC);
+                    }
+                    if(archivo.ExisteArchivo(rutaI))
+                    {
+                        archivo.CargarInforme(cadeteria.RetornarListaEntregados(), rutaI); //corregir, recibe toda la lista de pedidos cuando deberia selecionar los que tiene true en sus estados
+                        List<Pedido> pedidosLeer = archivo.LeerInforme(rutaI);
+                        double montoTotal;
+                    
+                        montoTotal = 500.00 * pedidosLeer.Count;
+                        
+                        if(montoTotal != 0)
                         {
-                            int pedidosEntregadosPorCadete = cadeteria.JornalACobrarCantidad(cadete.Id); // Obtener la cantidad de pedidos entregados por el cadete
-                            double cantidadPedidos = Convert.ToDouble(pedidosEntregadosPorCadete);
-                            Console.WriteLine($"ID: {cadete.Id}\nNombre: {cadete.Nombre}\nCantidad promedio de pedidos entregados: {cantidadPedidos/pedidosLeer.Count}\nGanancia: {cantidadPedidos * 500.00}");
-                            
+                            foreach (var cadete in cadeteria.Listaempleados)
+                            {
+                                int pedidosEntregadosPorCadete = cadeteria.JornalACobrarCantidad(cadete.Id); // Obtener la cantidad de pedidos entregados por el cadete
+                                double cantidadPedidos = Convert.ToDouble(pedidosEntregadosPorCadete);
+                                Console.WriteLine($"ID: {cadete.Id}\nNombre: {cadete.Nombre}\nCantidad promedio de pedidos entregados: {cantidadPedidos/pedidosLeer.Count}\nGanancia: {cantidadPedidos * 500.00}");
+                                
+                            }
                         }
+                        Console.WriteLine($"Total ganancias: {montoTotal}");
                     }
                     else
                     {
                         Console.WriteLine("Hoy no se vendieron productos.");
                     }
-                    Console.WriteLine($"Total ganancias: {montoTotal}");
+                    
                     
                 break;
         }

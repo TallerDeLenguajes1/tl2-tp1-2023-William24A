@@ -53,7 +53,6 @@ class AccesoCSV: AccesoADatos
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error al escribir datos: " + ex.Message);
             return cadeteria;
         }
 
@@ -75,7 +74,6 @@ class AccesoCSV: AccesoADatos
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error al escribir datos: " + ex.Message);
             return cadeteria;
         }
 
@@ -91,7 +89,6 @@ class AccesoCSV: AccesoADatos
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error al escribir datos: " + ex.Message);
         }
     }
 
@@ -109,7 +106,6 @@ class AccesoCSV: AccesoADatos
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error al escribir datos: " + ex.Message);
         }
     }
 
@@ -119,18 +115,15 @@ class AccesoCSV: AccesoADatos
         {
             if (!string.IsNullOrWhiteSpace(File.ReadAllText(ruta)))
             {
-                Console.WriteLine("El archivo existe");
                 return true;
             }
             else
             {
-                Console.WriteLine("El archivo existe pero está vacío.");
                 return false;
             }
         }
         else
         {
-            Console.WriteLine("El archivo no existe.");
             return false;
         }
     }
@@ -165,7 +158,6 @@ class AccesoCSV: AccesoADatos
     }
     catch (Exception ex)
     {
-        Console.WriteLine("Error al leer datos: " + ex.Message);
         return listaPedido;
     }
 }
@@ -187,7 +179,6 @@ class AccesoCSV: AccesoADatos
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error al escribir datos: " + ex.Message);
         }
     }
 }
@@ -237,18 +228,15 @@ class AccesoJSON: AccesoADatos
         {
             if (!string.IsNullOrWhiteSpace(File.ReadAllText(ruta)))
             {
-                Console.WriteLine("El archivo existe");
                 return true;
             }
             else
             {
-                Console.WriteLine("El archivo existe pero está vacío.");
                 return false;
             }
         }
         else
         {
-            Console.WriteLine("El archivo no existe.");
             return false;
         }
     }
@@ -263,18 +251,6 @@ class AccesoJSON: AccesoADatos
         }
         catch (FileNotFoundException ex)
         {
-            // Manejar la excepción si el archivo no se encuentra
-            Console.WriteLine("Archivo no encontrado: " + ex.Message);
-        }
-        catch (JsonException ex)
-        {
-            // Manejar la excepción si hay un error en la deserialización JSON
-            Console.WriteLine("Error en deserialización JSON: " + ex.Message);
-        }
-        catch (Exception ex)
-        {
-            // Manejar cualquier otra excepción
-            Console.WriteLine("Error: " + ex.Message);
         }
 
         return listaPedidos;
@@ -288,13 +264,6 @@ class AccesoJSON: AccesoADatos
         }
         catch (JsonException ex)
         {
-            // Manejar la excepción si hay un error en la serialización JSON
-            Console.WriteLine("Error en serialización JSON: " + ex.Message);
-        }
-        catch (Exception ex)
-        {
-            // Manejar cualquier otra excepción
-            Console.WriteLine("Error: " + ex.Message);
         }
     }
 }
